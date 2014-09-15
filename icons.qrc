@@ -1,0 +1,23 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>icons/document-preview.png</file>
+    <file>icons/document-save.png</file>
+    <file>icons/document-open.png</file>
+    <file>icons/edit-delete-shred.png</file>
+    <file>icons/application-exit.png</file>
+    <file>icons/arrow-down.png</file>
+    <file>icons/arrow-up.png</file>
+    <file>icons/dialog-cancel.png</file>
+    <file>icons/dialog-close.png</file>
+    <file>icons/dialog-ok-apply.png</file>
+    <file>icons/dialog-ok.png</file>
+    <file>icons/edit-delete.png</file>
+    <file>icons/fork.png</file>
+    <file>icons/games-highscores.png</file>
+    <file>icons/games-solve.png</file>
+    <file>icons/list-add.png</file>
+    <file>icons/list-remove.png</file>
+    <file>icons/window-close.png</file>
+    <file>icons/draw-freehand.png</file>
+  </qresource>
+</RCC>
