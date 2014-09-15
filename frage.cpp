@@ -19,9 +19,10 @@
 
 #include "frage.h"
 
-Frage::Frage ( QString frage, QString antwortA, QString antwortB, QString antwortC, QString antwortD, Frage::RichtigeAntwort richtig ) noexcept
+Frage::Frage ( QString titel, QString frage, QString antwortA, QString antwortB, QString antwortC, QString antwortD, Frage::RichtigeAntwort richtig ) noexcept
 :
-_frage ( frage ),
+_titel ( titel ),
+       _frage ( frage ),
        _antwortA ( antwortA ),
        _antwortB ( antwortB ),
        _antwortC ( antwortC ),
@@ -31,6 +32,7 @@ _frage ( frage ),
 
 Frage::Frage ( const Frage& other ) noexcept
 :
+_titel ( other._titel ),
 _frage ( other._frage ),
 _antwortA ( other._antwortA ),
 _antwortB ( other._antwortB ),
@@ -41,6 +43,7 @@ _richtig ( other._richtig )
 
 Frage::Frage ( Frage&& other ) noexcept
 :
+_titel ( std::move ( other._titel ) ),
 _frage ( std::move ( other._frage ) ),
 _antwortA ( std::move ( other._antwortA ) ),
 _antwortB ( std::move ( other._antwortB ) ),
@@ -56,6 +59,7 @@ Frage& Frage::operator= ( const Frage& other ) noexcept
 {
     if ( this != &other )
     {
+        _titel = other._titel;
         _frage = other._frage;
         _antwortA = other._antwortA;
         _antwortB = other._antwortB;
@@ -71,6 +75,7 @@ Frage& Frage::operator= ( Frage&& other ) noexcept
 {
     if ( this != &other )
     {
+        _titel = std::move ( other._titel );
         _frage = std::move ( other._frage );
         _antwortA = std::move ( other._antwortA );
         _antwortB = std::move ( other._antwortB );
@@ -83,7 +88,17 @@ Frage& Frage::operator= ( Frage&& other ) noexcept
 
 bool Frage::operator== ( const Frage& other ) const noexcept
 {
-    return ( _frage == other._frage ) && ( _antwortA == other._antwortA ) && ( _antwortB == other._antwortB ) && ( _antwortC == other._antwortC ) && ( _antwortD == other._antwortD ) && ( _richtig == other._richtig );
+    return ( _titel == other._titel ) && ( _frage == other._frage ) && ( _antwortA == other._antwortA ) && ( _antwortB == other._antwortB ) && ( _antwortC == other._antwortC ) && ( _antwortD == other._antwortD ) && ( _richtig == other._richtig );
+}
+
+QString Frage::getTitel() const noexcept
+{
+    return _titel;
+}
+
+void Frage::setTitel ( const QString titel ) noexcept
+{
+    _titel = titel;
 }
 
 QString Frage::getFrage() const noexcept

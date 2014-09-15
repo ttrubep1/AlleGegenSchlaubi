@@ -33,6 +33,7 @@ public:
         Drichtig = 3
     };
 private:
+    QString _titel;
     QString _frage;
     QString _antwortA;
     QString _antwortB;
@@ -40,13 +41,15 @@ private:
     QString _antwortD;
     RichtigeAntwort _richtig;
 public:
-    Frage ( QString frage, QString antwortA, QString antwortB, QString antwortC, QString antwortD, RichtigeAntwort richtig ) noexcept;
+    Frage ( QString titel, QString frage, QString antwortA, QString antwortB, QString antwortC, QString antwortD, RichtigeAntwort richtig ) noexcept;
     Frage ( const Frage& other ) noexcept;
     Frage ( Frage&& other ) noexcept;
     ~Frage() noexcept;
     Frage& operator= ( const Frage& other ) noexcept;
     Frage& operator= ( Frage&& other ) noexcept;
     bool operator== ( const Frage& other ) const noexcept;
+    QString getTitel() const noexcept;
+    void setTitel ( const QString titel ) noexcept;
     QString getFrage() const noexcept;
     void setFrage ( const QString frage ) noexcept;
     QString getAntwortA() const noexcept;
