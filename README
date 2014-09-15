@@ -1,0 +1,28 @@
++++Please understand that for educational purposes all documentation,
+naming etc. in this project is in German language only.+++
+
+
+"AlleGegenSchlaubi" ist ein kleines Rätselspiel für zwei Gruppen,
+dass über einen Projektor ("Beamer") gespielt wird.
+
+Vor Beginn müssten natürlich entsprechende Fragen mit jeweils vier
+Antwortmöglichkeiten erstellt werden, von denen jeweils nur eine
+richtig ist.
+
+Im Spiel gibt es dann zwei Anzeigen: Ein Steuerbildschirm, der auf dem
+Rechner angezeigt wird und in dem der Moderator/Techniker die Fragen
+auswählt und die Antworten der beiden Gruppen einträgt.
+
+Eine zweites Fenster wird auf den Projektor geschoben und zeigt die Frage
+sowie die zur verfügung stehenden Antwortmöglichkeiten den Kandidaten und
+Zuschauern.
+
+
+"AlleGegenSchlaubi" ist freie Software und darf gemäß den Bedingungen der
+GNU General Public License, Version 3 weitergegeben werden. Die Software
+wird dabei so, wie sie ist, angeboten, ohne jede Form der Garantie und/oder
+Gewährleistung. Produktunterstützung (Support) wird ebenfalls nicht gewährt.
+
+Herne, im September 2014
+Tobias Triffterer
+(tobias@ep1.ruhr-uni-bochum.de)
