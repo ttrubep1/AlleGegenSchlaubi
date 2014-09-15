@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SchlaubiSteuerung</class>
+ <widget class="QMainWindow" name="SchlaubiSteuerung">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>663</width>
+    <height>578</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Alle Gegen Schlaubi - Steuerfenster</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="hlFragenAdmin">
+      <item>
+       <widget class="QListView" name="lvFragen"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="vlFragenButtons">
+        <item>
+         <widget class="QPushButton" name="btnFrageNeu">
+          <property name="text">
+           <string>Neue Frage</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/list-add.png</normaloff>:/Icons/icons/list-add.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnFrageEditieren">
+          <property name="text">
+           <string>Frage ändern</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/draw-freehand.png</normaloff>:/Icons/icons/draw-freehand.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnFrageLoeschen">
+          <property name="text">
+           <string>Frage löschen</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/list-remove.png</normaloff>:/Icons/icons/list-remove.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnNachOben">
+          <property name="text">
+           <string>Frage nach oben</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/arrow-up.png</normaloff>:/Icons/icons/arrow-up.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnNachUnten">
+          <property name="text">
+           <string>Frage nach unten</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/arrow-down.png</normaloff>:/Icons/icons/arrow-down.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnFrageVorschau">
+          <property name="text">
+           <string>Fragenvorschau</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/document-preview.png</normaloff>:/Icons/icons/document-preview.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnFrageAnzeigen">
+          <property name="text">
+           <string>Frage anzeigen</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/fork.png</normaloff>:/Icons/icons/fork.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnErgebnisZeigen">
+          <property name="text">
+           <string>Ergebnis anzeigen</string>
+          </property>
+          <property name="icon">
+           <iconset resource="icons.qrc">
+            <normaloff>:/Icons/icons/games-highscores.png</normaloff>:/Icons/icons/games-highscores.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="grpAktuell">
+      <property name="title">
+       <string>Aktuelle Frage:</string>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="lblTitelBeschriftung">
+         <property name="text">
+          <string>&lt;b&gt;Titel:&lt;/b&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="lblTitel">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;b&gt;###Titel###&lt;/b&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="lblFrageBeschriftung">
+         <property name="text">
+          <string>Frage:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="lblFrage">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>###Frage###</string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="lblAntwortABeschriftung">
+         <property name="text">
+          <string>Antwort A:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="lblAntwortA">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>###AntwortA###</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="lblAntwortBBeschriftung">
+         <property name="text">
+          <string>Antwort B:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="lblAntwortB">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>###AntwortB###</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lblAntwortCBeschriftung">
+         <property name="text">
+          <string>Antwort C:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="lblAntwortC">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>###AntwortC###</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="lblAntwortDBeschriftung">
+         <property name="text">
+          <string>Antwort D:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="lblAntwortD">
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>###AntwortD###</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="hlGruppen">
+      <item>
+       <widget class="QGroupBox" name="grpGruppeA">
+        <property name="title">
+         <string>Gruppe A:</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="hlAntwortGruppeA">
+           <item>
+            <widget class="QPushButton" name="btnGruppeAWeg">
+             <property name="text">
+              <string>X</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-cancel.png</normaloff>:/Icons/icons/dialog-cancel.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeAAntwortA">
+             <property name="text">
+              <string>A</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeAAntwortB">
+             <property name="text">
+              <string>B</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeAAntwortC">
+             <property name="text">
+              <string>C</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeAAntwortD">
+             <property name="text">
+              <string>D</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="hlPunkteGruppeA">
+           <item>
+            <widget class="QLabel" name="lblPunkteABeschriftung">
+             <property name="text">
+              <string>Punkte:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblPunkteA">
+             <property name="text">
+              <string>42</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnPunkteA">
+             <property name="text">
+              <string>Ändern</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/games-solve.png</normaloff>:/Icons/icons/games-solve.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="hspPunkteGruppeA">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="grpGruppeB">
+        <property name="title">
+         <string>Gruppe B:</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <layout class="QHBoxLayout" name="hlAntwortGruppeB">
+           <item>
+            <widget class="QPushButton" name="btnGruppeBWeg">
+             <property name="text">
+              <string>X</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-cancel.png</normaloff>:/Icons/icons/dialog-cancel.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeBAntwortA">
+             <property name="text">
+              <string>A</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeBAntwortB">
+             <property name="text">
+              <string>B</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeBAntwortC">
+             <property name="text">
+              <string>C</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnGruppeBAntwortD">
+             <property name="text">
+              <string>D</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/dialog-ok-apply.png</normaloff>:/Icons/icons/dialog-ok-apply.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="hlPunkteGruppeB">
+           <item>
+            <widget class="QLabel" name="lblPunkteBBeschriftung">
+             <property name="text">
+              <string>Punkte:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblPunkteB">
+             <property name="text">
+              <string>42</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnPunkteB">
+             <property name="text">
+              <string>Ändern</string>
+             </property>
+             <property name="icon">
+              <iconset resource="icons.qrc">
+               <normaloff>:/Icons/icons/games-solve.png</normaloff>:/Icons/icons/games-solve.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="hspPunkteGruppeB">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>663</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>
