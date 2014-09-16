@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SchlaubiSteuerung</class>
- <widget class="QMainWindow" name="SchlaubiSteuerung">
+ <class>SteuerFenster</class>
+ <widget class="QMainWindow" name="SteuerFenster">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -496,11 +496,74 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHaupt">
+    <property name="title">
+     <string>&amp;Schlaubi-Menü</string>
+    </property>
+    <addaction name="actOeffnen"/>
+    <addaction name="actSpeichern"/>
+    <addaction name="actLeeren"/>
+    <addaction name="actBeenden"/>
+   </widget>
+   <addaction name="menuHaupt"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actOeffnen">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/icons/document-open.png</normaloff>:/Icons/icons/document-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fragenkatalog &amp;öffnen</string>
+   </property>
+  </action>
+  <action name="actSpeichern">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/icons/document-save.png</normaloff>:/Icons/icons/document-save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fragenkatalog &amp;speichern</string>
+   </property>
+  </action>
+  <action name="actLeeren">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/icons/edit-delete.png</normaloff>:/Icons/icons/edit-delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fragenkatalog &amp;leeren</string>
+   </property>
+  </action>
+  <action name="actBeenden">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/Icons/icons/application-exit.png</normaloff>:/Icons/icons/application-exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Programm &amp;beenden</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="icons.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actBeenden</sender>
+   <signal>activated()</signal>
+   <receiver>SteuerFenster</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>331</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
