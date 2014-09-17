@@ -19,14 +19,26 @@
 
 #include "steuerfenster.h"
 
+#include "fragebearbeiten.h"
+
 SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget )
 {
     _ui.setupUi ( this );
+
+    _ui.lvFragen->setModel ( &_fl );
+    connect ( _ui.btnFrageNeu, SIGNAL ( clicked() ), this, SLOT ( neueFrage() ) );
 }
 
 SteuerFenster::~SteuerFenster( )
 {
 
+}
+
+void SteuerFenster::neueFrage()
+{
+    Frage neu ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig );
+    if ( FrageBearbeiten::bearbeiteFrage ( neu, *this ) )
+        _fl.neueFrage ( std::move ( neu ) );
 }
 
 #include "steuerfenster.moc"

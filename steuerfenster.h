@@ -22,6 +22,7 @@
 
 #include <QMainWindow>
 
+#include "fragenliste.h"
 #include "ui_steuerfenster.h"
 
 class SteuerFenster : public QMainWindow
@@ -29,6 +30,10 @@ class SteuerFenster : public QMainWindow
     Q_OBJECT
 private:
     Ui::SteuerFenster _ui;
+    FragenListe _fl;
+private slots:
+  
+    void neueFrage();
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
     virtual ~SteuerFenster();

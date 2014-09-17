@@ -38,7 +38,7 @@ QVariant FragenListe::data ( const QModelIndex& queriedindex, int queriedrole ) 
     case Qt::DisplayRole:
         if ( queriedindex == QModelIndex() )
             return QVariant();
-        if ( ( size_t ) queriedindex.row() >= _fragen.size() -1 )
+        if ( ( size_t ) queriedindex.row() >= _fragen.size() )
             throw std::out_of_range ( "queriedindex.row() zu groß in FragenListe::data()" );
         return QVariant::fromValue<QString> ( _fragen[queriedindex.row()].getTitel() );
         break;
