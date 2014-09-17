@@ -32,8 +32,9 @@ private:
     Ui::SteuerFenster _ui;
     FragenListe _fl;
 private slots:
-  
     void neueFrage();
+    void bearbeiteFrage();
+    void loescheFrage();
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
     virtual ~SteuerFenster();

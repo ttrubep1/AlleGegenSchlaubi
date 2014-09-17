@@ -27,6 +27,8 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
 
     _ui.lvFragen->setModel ( &_fl );
     connect ( _ui.btnFrageNeu, SIGNAL ( clicked() ), this, SLOT ( neueFrage() ) );
+    connect ( _ui.btnFrageEditieren, SIGNAL ( clicked() ), this, SLOT ( bearbeiteFrage() ) );
+    connect ( _ui.btnFrageLoeschen, SIGNAL ( clicked() ), this, SLOT ( loescheFrage() ) );
 }
 
 SteuerFenster::~SteuerFenster( )
@@ -39,6 +41,24 @@ void SteuerFenster::neueFrage()
     Frage neu ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig );
     if ( FrageBearbeiten::bearbeiteFrage ( neu, *this ) )
         _fl.neueFrage ( std::move ( neu ) );
+}
+
+void SteuerFenster::bearbeiteFrage()
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    Frage& frage = _fl.holeFrage ( nummer );
+    if ( FrageBearbeiten::bearbeiteFrage ( frage, *this ) )
+        _fl.geaendertFrage ( nummer );
+}
+
+void SteuerFenster::loescheFrage()
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    _fl.loescheFrage ( nummer );
 }
 
 #include "steuerfenster.moc"
