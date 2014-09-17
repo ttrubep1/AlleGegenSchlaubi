@@ -81,6 +81,13 @@ Frage& FragenListe::holeFrage ( const size_t nummer )
     return _fragen[nummer];
 }
 
+void FragenListe::geaendertFrage ( const size_t nummer )
+{
+    if ( nummer >= _fragen.size() )
+        throw std::out_of_range ( "Fragennummer zu groß in FragenListe::geaendertFrage()" );
+    emit dataChanged ( index ( nummer ), index ( nummer ) );
+}
+
 void FragenListe::loescheFrage ( const size_t nummer )
 {
     if ( nummer >= _fragen.size() )
