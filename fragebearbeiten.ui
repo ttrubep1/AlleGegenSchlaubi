@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FragenEditor</class>
- <widget class="QDialog" name="FragenEditor">
+ <class>FrageBearbeiten</class>
+ <widget class="QDialog" name="FrageBearbeiten">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -167,7 +167,7 @@
   <connection>
    <sender>btnboxErgebnis</sender>
    <signal>accepted()</signal>
-   <receiver>FragenEditor</receiver>
+   <receiver>FrageBearbeiten</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -183,7 +183,7 @@
   <connection>
    <sender>btnboxErgebnis</sender>
    <signal>rejected()</signal>
-   <receiver>FragenEditor</receiver>
+   <receiver>FrageBearbeiten</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
