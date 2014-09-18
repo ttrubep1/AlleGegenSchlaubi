@@ -29,6 +29,8 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.btnFrageNeu, SIGNAL ( clicked() ), this, SLOT ( neueFrage() ) );
     connect ( _ui.btnFrageEditieren, SIGNAL ( clicked() ), this, SLOT ( bearbeiteFrage() ) );
     connect ( _ui.btnFrageLoeschen, SIGNAL ( clicked() ), this, SLOT ( loescheFrage() ) );
+    connect ( _ui.btnNachOben, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageHoch() ) );
+    connect ( _ui.btnNachUnten, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageRunter() ) );
 }
 
 SteuerFenster::~SteuerFenster( )
@@ -59,6 +61,28 @@ void SteuerFenster::loescheFrage()
         return;
     const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
     _fl.loescheFrage ( nummer );
+}
+
+void SteuerFenster::schiebeFrageHoch()
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    if ( nummer == 0 )
+        return; // Erste Frage kann nicht hochgeschoben werden
+    _fl.schiebeFrageHoch ( nummer );
+    _ui.lvFragen->setCurrentIndex ( _fl.index ( ( int ) nummer - 1 ) );
+}
+
+void SteuerFenster::schiebeFrageRunter()
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    if ( (int) nummer == _fl.rowCount() - 1 )
+        return; // Letzte Frage kann nicht runtergeschoben werden
+    _fl.schiebeFrageRunter ( nummer );
+    _ui.lvFragen->setCurrentIndex ( _fl.index ( ( int ) nummer + 1 ) );
 }
 
 #include "steuerfenster.moc"
