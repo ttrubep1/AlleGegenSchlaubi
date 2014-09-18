@@ -31,6 +31,7 @@ class SteuerFenster : public QMainWindow
 private:
     Ui::SteuerFenster _ui;
     FragenListe _fl;
+    bool _ungespeichert;
 private slots:
     void neueFrage();
     void bearbeiteFrage();
@@ -38,6 +39,7 @@ private slots:
     void schiebeFrageHoch();
     void schiebeFrageRunter();
     void speichereFragen();
+    virtual void closeEvent ( QCloseEvent* closeargs );
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
     virtual ~SteuerFenster();

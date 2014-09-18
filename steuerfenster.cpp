@@ -24,7 +24,8 @@
 
 #include "fragebearbeiten.h"
 
-SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget )
+SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget ),
+    _ungespeichert ( false )
 {
     _ui.setupUi ( this );
 
@@ -42,11 +43,28 @@ SteuerFenster::~SteuerFenster( )
 
 }
 
+void SteuerFenster::closeEvent ( QCloseEvent* closeargs )
+{
+    if ( _ungespeichert )
+    {
+        const QMessageBox::StandardButton antwort = QMessageBox::question (
+                    this,
+                    QString::fromUtf8 ( "Ungespeicherte Fragen" ),
+                    QString::fromUtf8 ( "In der Liste befinden sich ungespeicherte Fragen.\nSoll das Programm trotzdem geschlossen werden?" ),
+                    QMessageBox::Yes | QMessageBox::No,
+                    QMessageBox::No
+                );
+        if ( antwort == QMessageBox::No )
+            closeargs->ignore();
+    }
+}
+
 void SteuerFenster::neueFrage()
 {
     Frage neu ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig );
     if ( FrageBearbeiten::bearbeiteFrage ( neu, *this ) )
         _fl.neueFrage ( std::move ( neu ) );
+    _ungespeichert = true;
 }
 
 void SteuerFenster::bearbeiteFrage()
@@ -57,6 +75,7 @@ void SteuerFenster::bearbeiteFrage()
     Frage& frage = _fl.holeFrage ( nummer );
     if ( FrageBearbeiten::bearbeiteFrage ( frage, *this ) )
         _fl.geaendertFrage ( nummer );
+    _ungespeichert = true;
 }
 
 void SteuerFenster::loescheFrage()
@@ -65,6 +84,7 @@ void SteuerFenster::loescheFrage()
         return;
     const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
     _fl.loescheFrage ( nummer );
+    _ungespeichert = true;
 }
 
 void SteuerFenster::schiebeFrageHoch()
@@ -76,6 +96,7 @@ void SteuerFenster::schiebeFrageHoch()
         return; // Erste Frage kann nicht hochgeschoben werden
     _fl.schiebeFrageHoch ( nummer );
     _ui.lvFragen->setCurrentIndex ( _fl.index ( ( int ) nummer - 1 ) );
+    _ungespeichert = true;
 }
 
 void SteuerFenster::schiebeFrageRunter()
@@ -87,6 +108,7 @@ void SteuerFenster::schiebeFrageRunter()
         return; // Letzte Frage kann nicht runtergeschoben werden
     _fl.schiebeFrageRunter ( nummer );
     _ui.lvFragen->setCurrentIndex ( _fl.index ( ( int ) nummer + 1 ) );
+    _ungespeichert = true;
 }
 
 
@@ -114,6 +136,8 @@ void SteuerFenster::speichereFragen()
                     QString::fromUtf8 ( "Beim Schreiben der Datei ist ein Fehler aufgetreten.\n\nFehlermeldung: " )
                     + datei.errorString()
                 );
+            else
+                _ungespeichert = false;
         }
         catch ( std::exception& ex )
         {
