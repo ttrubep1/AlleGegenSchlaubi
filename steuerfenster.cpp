@@ -19,6 +19,9 @@
 
 #include "steuerfenster.h"
 
+#include <QFileDialog>
+#include <QMessageBox>
+
 #include "fragebearbeiten.h"
 
 SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget )
@@ -31,6 +34,7 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.btnFrageLoeschen, SIGNAL ( clicked() ), this, SLOT ( loescheFrage() ) );
     connect ( _ui.btnNachOben, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageHoch() ) );
     connect ( _ui.btnNachUnten, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageRunter() ) );
+    connect ( _ui.actSpeichern, SIGNAL ( triggered() ), this, SLOT ( speichereFragen() ) );
 }
 
 SteuerFenster::~SteuerFenster( )
@@ -79,10 +83,58 @@ void SteuerFenster::schiebeFrageRunter()
     if ( !_ui.lvFragen->currentIndex().isValid() )
         return;
     const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
-    if ( (int) nummer == _fl.rowCount() - 1 )
+    if ( ( int ) nummer == _fl.rowCount() - 1 )
         return; // Letzte Frage kann nicht runtergeschoben werden
     _fl.schiebeFrageRunter ( nummer );
     _ui.lvFragen->setCurrentIndex ( _fl.index ( ( int ) nummer + 1 ) );
+}
+
+
+void SteuerFenster::speichereFragen()
+{
+    const QString dateiname = QFileDialog::getSaveFileName (
+                                  this,
+                                  QString::fromUtf8 ( "Speicherort auswählen..." ),
+                                  QString(),
+                                  QString::fromUtf8 ( "XML-Dateien (*.xml)" )
+                              );
+    if ( dateiname == QString() )
+        return;
+    QFile datei ( dateiname );
+    datei.open ( QFile::WriteOnly );
+    if ( datei.isOpen() )
+    {
+        try
+        {
+            _fl.speichereFragen ( &datei );
+            if ( datei.error() != QFile::NoError )
+                QMessageBox::critical (
+                    this,
+                    QString::fromUtf8 ( "Fehler beim Speichern" ),
+                    QString::fromUtf8 ( "Beim Schreiben der Datei ist ein Fehler aufgetreten.\n\nFehlermeldung: " )
+                    + datei.errorString()
+                );
+        }
+        catch ( std::exception& ex )
+        {
+            QMessageBox::critical (
+                this,
+                QString::fromUtf8 ( "Fehler beim Speichern" ),
+                QString::fromUtf8 ( "Das Speichern der Datei ist fehlgeschlagen.\n\nFehlermeldung: " )
+                + QString::fromUtf8 ( ex.what() )
+            );
+        }
+    }
+    else
+    {
+        QMessageBox::critical (
+            this,
+            QString::fromUtf8 ( "Fehler beim Speichern" ),
+            QString::fromUtf8 ( "Die Datei konnte nicht zum Schreiben geöffnet werden.\n\nFehlermeldung: " )
+            + datei.errorString()
+        );
+    }
+    datei.close();
 }
 
 #include "steuerfenster.moc"

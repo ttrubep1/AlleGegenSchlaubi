@@ -37,6 +37,7 @@ private slots:
     void loescheFrage();
     void schiebeFrageHoch();
     void schiebeFrageRunter();
+    void speichereFragen();
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
     virtual ~SteuerFenster();

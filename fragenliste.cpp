@@ -19,6 +19,9 @@
 
 #include <stdexcept>
 
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+
 #include "fragenliste.h"
 
 FragenListe::FragenListe() : QAbstractListModel()
@@ -85,7 +88,7 @@ void FragenListe::geaendertFrage ( const size_t nummer )
 {
     if ( nummer >= _fragen.size() )
         throw std::out_of_range ( "Fragennummer zu groß in FragenListe::geaendertFrage()" );
-    emit dataChanged ( index ( nummer ), index ( nummer ) );
+    emit dataChanged ( index ( ( int ) nummer ), index ( ( int ) nummer ) );
 }
 
 void FragenListe::loescheFrage ( const size_t nummer )
@@ -142,4 +145,44 @@ FragenListe::FragenVektor::const_iterator FragenListe::begin() const
 FragenListe::FragenVektor::const_iterator FragenListe::end() const
 {
     return _fragen.end();
+}
+
+void FragenListe::speichereFragen ( QIODevice*const ziel ) const
+{
+    const QString xmlnamespace = QString::fromUtf8 ( "private://AlleGegenSchlaubi/Fragen.Liste" );
+    QXmlStreamWriter xml ( ziel );
+    xml.setAutoFormatting ( true );
+    xml.writeStartDocument ( QString::fromUtf8 ( "1.0" ) );
+    xml.writeDTD ( QString::fromUtf8 ( "<!DOCTYPE AlleGegenSchlaubi SYSTEM \"+//ALLE GEGEN SCHLAUBI/FRAGENLISTE//+\">" ) );
+    xml.writeDefaultNamespace ( xmlnamespace );
+    xml.writeStartElement ( xmlnamespace, QString::fromUtf8 ( "AlleGegenSchlaubi" ) );
+    for ( auto i = _fragen.begin(); i != _fragen.end(); i++ )
+    {
+        xml.writeStartElement ( xmlnamespace, QString::fromUtf8 ( "Frage" ) );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "Titel" ), ( *i ).getTitel() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "Frage" ), ( *i ).getFrage() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "AntwortA" ), ( *i ).getAntwortA() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "AntwortB" ), ( *i ).getAntwortB() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "AntwortC" ), ( *i ).getAntwortC() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "AntwortD" ), ( *i ).getAntwortD() );
+        xml.writeTextElement ( xmlnamespace, QString::fromUtf8 ( "Richtig" ), enumZuText ( ( *i ).getRichtig() ) );
+        xml.writeEndElement();
+    }
+    xml.writeEndDocument();
+}
+
+QString FragenListe::enumZuText ( Frage::RichtigeAntwort wert )
+{
+    switch ( wert )
+    {
+    case Frage::Arichtig:
+        return QString::fromUtf8 ( "A" );
+    case Frage::Brichtig:
+        return QString::fromUtf8 ( "B" );
+    case Frage::Crichtig:
+        return QString::fromUtf8 ( "C" );
+    case Frage::Drichtig:
+        return QString::fromUtf8 ( "D" );
+    }
+    throw std::logic_error ( "Unbekannter Wert für richtige Antwort in FragenListe::enumZuText()" );
 }

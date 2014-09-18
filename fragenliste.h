@@ -30,6 +30,7 @@ public:
     typedef std::vector<Frage> FragenVektor;
 private:
     FragenVektor _fragen;
+    static QString enumZuText(Frage::RichtigeAntwort wert);
 public:
     FragenListe();
     virtual ~FragenListe();
@@ -51,6 +52,7 @@ public:
     FragenListe::FragenVektor::iterator end();
     FragenListe::FragenVektor::const_iterator begin() const;
     FragenListe::FragenVektor::const_iterator end() const;
+    void speichereFragen(QIODevice*const ziel) const;
 };
 
 #endif // FRAGENLISTE_H
