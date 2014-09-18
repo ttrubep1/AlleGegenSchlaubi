@@ -17,7 +17,9 @@
  *
  */
 
-#include <QtGui/QApplication>
+#include <QApplication>
+#include <QLibraryInfo>
+#include <QTranslator>
 
 #include "steuerfenster.h"
 
@@ -26,6 +28,16 @@ int main ( int argc, char** argv )
     QApplication app ( argc, argv );
     app.setApplicationName ( QString::fromUtf8 ( "AlleGegenSchlaubi" ) );
     app.setApplicationVersion ( QString::fromUtf8 ( "0.0.1" ) );
+    // Dieses Programm wird vorerst nur auf Deutsch entwickelt:
+    QLocale::setDefault ( QLocale ( QLocale::German, QLocale::Germany ) );
+    QTranslator qtSprache;
+    qtSprache.load (
+        QLocale::system(),
+        QString::fromUtf8("qt"),
+        QString::fromUtf8 ( "_" ),
+        QLibraryInfo::location ( QLibraryInfo::TranslationsPath )
+    );
+    app.installTranslator ( &qtSprache );
     SteuerFenster hauptFenster;
     hauptFenster.show();
     return app.exec();
