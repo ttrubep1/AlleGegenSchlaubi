@@ -20,6 +20,11 @@
 #include <QApplication>
 #include <QLibraryInfo>
 #include <QTranslator>
+#ifdef __linux
+#include <KDE/KComponentData>
+#include <KDE/KGlobal>
+#include <KDE/KLocale>
+#endif
 
 #include "steuerfenster.h"
 
@@ -30,10 +35,15 @@ int main ( int argc, char** argv )
     app.setApplicationVersion ( QString::fromUtf8 ( "0.0.1" ) );
     // Dieses Programm wird vorerst nur auf Deutsch entwickelt:
     QLocale::setDefault ( QLocale ( QLocale::German, QLocale::Germany ) );
+#ifdef __linux
+    KComponentData kde4info ( QString::fromUtf8 ( "AlleGegenSchlaubi" ).toUtf8() );
+    KGlobal::setActiveComponent( kde4info );
+    KGlobal::locale()->setLanguage ( QString::fromUtf8 ( "de" ), nullptr );
+#endif
     QTranslator qtSprache;
     qtSprache.load (
         QLocale::system(),
-        QString::fromUtf8("qt"),
+        QString::fromUtf8 ( "qt" ),
         QString::fromUtf8 ( "_" ),
         QLibraryInfo::location ( QLibraryInfo::TranslationsPath )
     );
