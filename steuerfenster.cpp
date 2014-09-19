@@ -63,8 +63,10 @@ void SteuerFenster::neueFrage()
 {
     Frage neu ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig );
     if ( FrageBearbeiten::bearbeiteFrage ( neu, *this ) )
+    {
         _fl.neueFrage ( std::move ( neu ) );
-    _ungespeichert = true;
+        _ungespeichert = true;
+    }
 }
 
 void SteuerFenster::bearbeiteFrage()
@@ -74,8 +76,10 @@ void SteuerFenster::bearbeiteFrage()
     const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
     Frage& frage = _fl.holeFrage ( nummer );
     if ( FrageBearbeiten::bearbeiteFrage ( frage, *this ) )
+    {
         _fl.geaendertFrage ( nummer );
-    _ungespeichert = true;
+        _ungespeichert = true;
+    }
 }
 
 void SteuerFenster::loescheFrage()
