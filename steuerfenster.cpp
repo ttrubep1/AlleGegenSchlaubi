@@ -35,6 +35,7 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.btnFrageLoeschen, SIGNAL ( clicked() ), this, SLOT ( loescheFrage() ) );
     connect ( _ui.btnNachOben, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageHoch() ) );
     connect ( _ui.btnNachUnten, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageRunter() ) );
+    connect ( _ui.actOeffnen, SIGNAL ( triggered() ), this, SLOT ( oeffneFragen() ) );
     connect ( _ui.actSpeichern, SIGNAL ( triggered() ), this, SLOT ( speichereFragen() ) );
 }
 
@@ -115,6 +116,66 @@ void SteuerFenster::schiebeFrageRunter()
     _ungespeichert = true;
 }
 
+void SteuerFenster::oeffneFragen()
+{
+    if ( _ungespeichert ) // Sichergehen, dass durch das Öffnen keine Daten verloren gehen
+    {
+        const QMessageBox::StandardButton antwort = QMessageBox::question (
+                    this,
+                    QString::fromUtf8 ( "Ungespeicherte Fragen" ),
+                    QString::fromUtf8 ( "In der Liste befinden sich ungespeicherte Fragen.\nSollen diese durch die Fragen aus der geöffneten Datei überschrieben werden?" ),
+                    QMessageBox::Yes | QMessageBox::No,
+                    QMessageBox::No
+                );
+        if ( antwort == QMessageBox::No )
+            return;
+    }
+    const QString dateiname = QFileDialog::getOpenFileName (
+                                  this,
+                                  QString::fromUtf8 ( "Fragenliste auswählen..." ),
+                                  QString(),
+                                  QString::fromUtf8 ( "XML-Dateien (*.xml)" )
+                              );
+    if ( dateiname == QString() )
+        return;
+    QFile datei ( dateiname );
+    datei.open ( QFile::ReadOnly );
+    if ( datei.isOpen() )
+    {
+        try
+        {
+            _fl.oeffneFragen ( &datei );
+            if ( datei.error() != QFile::NoError )
+                QMessageBox::critical (
+                    this,
+                    QString::fromUtf8 ( "Fehler beim Öffnen" ),
+                    QString::fromUtf8 ( "Beim Lesen der Datei ist ein Fehler aufgetreten.\n\nFehlermeldung: " )
+                    + datei.errorString()
+                );
+            else
+                _ungespeichert = false;
+        }
+        catch ( std::exception& ex )
+        {
+            QMessageBox::critical (
+                this,
+                QString::fromUtf8 ( "Fehler beim Öffnen" ),
+                QString::fromUtf8 ( "Das Lesen der Datei ist fehlgeschlagen.\n\nFehlermeldung: " )
+                + QString::fromUtf8 ( ex.what() )
+            );
+        }
+    }
+    else
+    {
+        QMessageBox::critical (
+            this,
+            QString::fromUtf8 ( "Fehler beim Öffnen" ),
+            QString::fromUtf8 ( "Die Datei konnte nicht zum Lesen geöffnet werden.\n\nFehlermeldung: " )
+            + datei.errorString()
+        );
+    }
+    datei.close();
+}
 
 void SteuerFenster::speichereFragen()
 {

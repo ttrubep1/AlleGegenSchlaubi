@@ -38,6 +38,7 @@ private slots:
     void loescheFrage();
     void schiebeFrageHoch();
     void schiebeFrageRunter();
+    void oeffneFragen();
     void speichereFragen();
     virtual void closeEvent ( QCloseEvent* closeargs );
 public:
