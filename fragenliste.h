@@ -44,6 +44,7 @@ public:
     void neueFrage ( const Frage& frage );
     void neueFrage ( Frage&& frage );
     Frage& holeFrage ( const size_t nummer );
+    const Frage& constHoleFrage ( const size_t nummer ) const;
     void geaendertFrage ( const size_t nummer );
     void loescheFrage ( const size_t nummer );
     void loescheAlles();
