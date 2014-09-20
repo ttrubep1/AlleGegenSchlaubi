@@ -37,6 +37,7 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.btnNachUnten, SIGNAL ( clicked() ), this, SLOT ( schiebeFrageRunter() ) );
     connect ( _ui.actOeffnen, SIGNAL ( triggered() ), this, SLOT ( oeffneFragen() ) );
     connect ( _ui.actSpeichern, SIGNAL ( triggered() ), this, SLOT ( speichereFragen() ) );
+    connect ( _ui.btnFrageVorschau, SIGNAL ( clicked() ), this, SLOT ( zeigeFragenVorschau() ) );
 }
 
 SteuerFenster::~SteuerFenster( )
@@ -224,6 +225,37 @@ void SteuerFenster::speichereFragen()
         );
     }
     datei.close();
+}
+
+void SteuerFenster::zeigeFragenVorschau() const
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    const Frage& frage = _fl.constHoleFrage ( nummer );
+    QMessageBox::information (
+        nullptr,
+        QString::fromUtf8 ( "Fragen-Vorschau" ),
+        QString::fromUtf8 ( "Titel: " ) + frage.getTitel() + QString::fromUtf8 ( "\n\n" )
+        + QString::fromUtf8 ( "Frage:\n" )
+        + frage.getFrage()
+        + QString::fromUtf8 ( "\n\n" )
+        + ( frage.getRichtig() == Frage::Arichtig ? QString::fromUtf8 ( " " ) : QString() )
+        + QString::fromUtf8 ( "Antwort A:\n" )
+        + frage.getAntwortA()
+        + QString::fromUtf8 ( "\n\n" )
+        + ( frage.getRichtig() == Frage::Brichtig ? QString::fromUtf8 ( " " ) : QString() )
+        + QString::fromUtf8 ( "Antwort B:\n" )
+        + frage.getAntwortB()
+        + QString::fromUtf8 ( "\n\n" )
+        + ( frage.getRichtig() == Frage::Crichtig ? QString::fromUtf8 ( " " ) : QString() )
+        + QString::fromUtf8 ( "Antwort C:\n" )
+        + frage.getAntwortC()
+        + QString::fromUtf8 ( "\n\n" )
+        + ( frage.getRichtig() == Frage::Drichtig ? QString::fromUtf8 ( " " ) : QString() )
+        + QString::fromUtf8 ( "Antwort D:\n" )
+        + frage.getAntwortD()
+    );
 }
 
 #include "steuerfenster.moc"

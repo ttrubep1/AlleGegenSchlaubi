@@ -40,6 +40,7 @@ private slots:
     void schiebeFrageRunter();
     void oeffneFragen();
     void speichereFragen();
+    void zeigeFragenVorschau() const;
     virtual void closeEvent ( QCloseEvent* closeargs );
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
