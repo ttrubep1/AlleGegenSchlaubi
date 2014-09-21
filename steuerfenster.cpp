@@ -19,7 +19,9 @@
 
 #include "steuerfenster.h"
 
+#include <limits>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QMessageBox>
 
 #include "fragebearbeiten.h"
@@ -38,6 +40,11 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.actOeffnen, SIGNAL ( triggered() ), this, SLOT ( oeffneFragen() ) );
     connect ( _ui.actSpeichern, SIGNAL ( triggered() ), this, SLOT ( speichereFragen() ) );
     connect ( _ui.btnFrageVorschau, SIGNAL ( clicked() ), this, SLOT ( zeigeFragenVorschau() ) );
+    connect ( &_punkte, SIGNAL ( punkteGeaendert() ), this, SLOT ( aktualiserePunkteAnzeige() ) );
+    connect ( _ui.btnPunkteA, SIGNAL ( clicked() ), this, SLOT ( punkteAendernA() ) );
+    connect ( _ui.btnPunkteB, SIGNAL ( clicked() ), this, SLOT ( punkteAendernB() ) );
+    _punkte.setzePunkteA ( 0 );
+    _punkte.setzePunkteB ( 0 );
 }
 
 SteuerFenster::~SteuerFenster( )
@@ -256,6 +263,60 @@ void SteuerFenster::zeigeFragenVorschau() const
         + QString::fromUtf8 ( "Antwort D:\n" )
         + frage.getAntwortD()
     );
+}
+
+void SteuerFenster::aktualiserePunkteAnzeige()
+{
+    _ui.lblPunkteA->setText (
+        QString::number ( _punkte.punkteA(), 10 )
+    );
+    _ui.lblPunkteB->setText (
+        QString::number ( _punkte.punkteB(), 10 )
+    );
+}
+
+void SteuerFenster::punkteAendernA()
+{
+    bool ok = false;
+    const int antwort = QInputDialog::getInt (
+                            this,
+                            QString::fromUtf8 ( "Punkte für Gruppe A ändern" ),
+                            QString::fromUtf8 ( "Bitte den neuen Punktestand für Gruppe A eingeben:" ),
+                            ( int ) _punkte.punkteA(),
+                            0,
+                            std::numeric_limits< int >::max(),
+                            1,
+                            &ok
+                        );
+    if ( !ok )
+        return;
+    if ( antwort < 0  || antwort > std::numeric_limits< int >::max() )
+        return;
+    // Schlussfolgerung: antwort passt immer in unsigned int, also:
+    const unsigned int punkte = ( unsigned int ) antwort;
+    _punkte.setzePunkteA ( punkte );
+}
+
+void SteuerFenster::punkteAendernB()
+{
+    bool ok = false;
+    const int antwort = QInputDialog::getInt (
+                            this,
+                            QString::fromUtf8 ( "Punkte für Gruppe B ändern" ),
+                            QString::fromUtf8 ( "Bitte den neuen Punktestand für Gruppe B eingeben:" ),
+                            ( int ) _punkte.punkteB(),
+                            0,
+                            std::numeric_limits< int >::max(),
+                            1,
+                            &ok
+                        );
+    if ( !ok )
+        return;
+    if ( antwort < 0  || antwort > std::numeric_limits< int >::max() )
+        return;
+    // Schlussfolgerung: antwort passt immer in unsigned int, also:
+    const unsigned int punkte = ( unsigned int ) antwort;
+    _punkte.setzePunkteB ( punkte );
 }
 
 #include "steuerfenster.moc"

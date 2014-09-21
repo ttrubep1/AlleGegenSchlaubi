@@ -23,6 +23,7 @@
 #include <QMainWindow>
 
 #include "fragenliste.h"
+#include "punkteab.h"
 #include "ui_steuerfenster.h"
 
 class SteuerFenster : public QMainWindow
@@ -31,6 +32,7 @@ class SteuerFenster : public QMainWindow
 private:
     Ui::SteuerFenster _ui;
     FragenListe _fl;
+    PunkteAB _punkte;
     bool _ungespeichert;
 private slots:
     void neueFrage();
@@ -42,6 +44,9 @@ private slots:
     void speichereFragen();
     void zeigeFragenVorschau() const;
     virtual void closeEvent ( QCloseEvent* closeargs );
+    void aktualiserePunkteAnzeige();
+    void punkteAendernA();
+    void punkteAendernB();
 public:
     SteuerFenster ( QWidget* parentwidget = nullptr );
     virtual ~SteuerFenster();
