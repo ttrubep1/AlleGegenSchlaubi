@@ -13,7 +13,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 set(COMPILE_FLAGS "-Wall -W -Wconversion -Wshadow -Wwrite-strings -pthread -rdynamic -std=gnu++0x -fexceptions -O2 -fPIC")
 set(CMAKE_CXX_FLAGS ${COMPILE_FLAGS})
 
-set(AlleGegenSchlaubi_SRCS punkteab.cpp fragebearbeiten.cpp steuerfenster.cpp fragenliste.cpp frage.cpp main.cpp)
+set(AlleGegenSchlaubi_SRCS quizfenster.cpp punkteab.cpp fragebearbeiten.cpp steuerfenster.cpp fragenliste.cpp frage.cpp main.cpp)
 set(AlleGegenSchlaubi_RES icons.qrc)
 set(AlleGegenSchlaubi_UI steuerfenster.ui fragebearbeiten.ui quizfenster.ui)
 

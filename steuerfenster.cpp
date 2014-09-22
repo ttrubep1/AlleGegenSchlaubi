@@ -27,7 +27,8 @@
 #include "fragebearbeiten.h"
 
 SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget ),
-    _ungespeichert ( false )
+    _ungespeichert ( false ),
+    _quiz ( new QuizFenster ( _punkte ) )
 {
     _ui.setupUi ( this );
 
@@ -40,16 +41,18 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.actOeffnen, SIGNAL ( triggered() ), this, SLOT ( oeffneFragen() ) );
     connect ( _ui.actSpeichern, SIGNAL ( triggered() ), this, SLOT ( speichereFragen() ) );
     connect ( _ui.btnFrageVorschau, SIGNAL ( clicked() ), this, SLOT ( zeigeFragenVorschau() ) );
+    connect ( _ui.btnFrageAnzeigen, SIGNAL ( clicked() ), this, SLOT ( zeigeFrage() ) );
     connect ( &_punkte, SIGNAL ( punkteGeaendert() ), this, SLOT ( aktualiserePunkteAnzeige() ) );
     connect ( _ui.btnPunkteA, SIGNAL ( clicked() ), this, SLOT ( punkteAendernA() ) );
     connect ( _ui.btnPunkteB, SIGNAL ( clicked() ), this, SLOT ( punkteAendernB() ) );
     _punkte.setzePunkteA ( 0 );
     _punkte.setzePunkteB ( 0 );
+    _quiz->show();
 }
 
 SteuerFenster::~SteuerFenster( )
 {
-
+    delete _quiz;
 }
 
 void SteuerFenster::closeEvent ( QCloseEvent* closeargs )
@@ -65,6 +68,12 @@ void SteuerFenster::closeEvent ( QCloseEvent* closeargs )
                 );
         if ( antwort == QMessageBox::No )
             closeargs->ignore();
+        else
+            _quiz->beenden();
+    }
+    else
+    {
+        _quiz->beenden();
     }
 }
 
@@ -263,6 +272,21 @@ void SteuerFenster::zeigeFragenVorschau() const
         + QString::fromUtf8 ( "Antwort D:\n" )
         + frage.getAntwortD()
     );
+}
+
+void SteuerFenster::zeigeFrage()
+{
+    if ( !_ui.lvFragen->currentIndex().isValid() )
+        return;
+    const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
+    const Frage& frage = _fl.constHoleFrage ( nummer );
+    _quiz->zeigeFrage ( frage );
+    _ui.lblTitel->setText(frage.getTitel());
+    _ui.lblFrage->setText(frage.getFrage());
+    _ui.lblAntwortA->setText(frage.getAntwortA());
+    _ui.lblAntwortB->setText(frage.getAntwortB());
+    _ui.lblAntwortC->setText(frage.getAntwortC());
+    _ui.lblAntwortD->setText(frage.getAntwortD());
 }
 
 void SteuerFenster::aktualiserePunkteAnzeige()
