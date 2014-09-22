@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS ${COMPILE_FLAGS})
 
 set(AlleGegenSchlaubi_SRCS punkteab.cpp fragebearbeiten.cpp steuerfenster.cpp fragenliste.cpp frage.cpp main.cpp)
 set(AlleGegenSchlaubi_RES icons.qrc)
-set(AlleGegenSchlaubi_UI steuerfenster.ui fragebearbeiten.ui)
+set(AlleGegenSchlaubi_UI steuerfenster.ui fragebearbeiten.ui quizfenster.ui)
 
 qt4_automoc(${AlleGegenSchlaubi_SRCS})
 qt4_add_resources(AlleGegenSchlaubi_RES_H ${AlleGegenSchlaubi_RES})
