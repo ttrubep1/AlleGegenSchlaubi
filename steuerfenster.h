@@ -49,6 +49,16 @@ private slots:
     void aktualiserePunkteAnzeige();
     void punkteAendernA();
     void punkteAendernB();
+    void auswahlGruppeAkeineAntwort();
+    void auswahlGruppeAAntwortA();
+    void auswahlGruppeAAntwortB();
+    void auswahlGruppeAAntwortC();
+    void auswahlGruppeAAntwortD();
+    void auswahlGruppeBkeineAntwort();
+    void auswahlGruppeBAntwortA();
+    void auswahlGruppeBAntwortB();
+    void auswahlGruppeBAntwortC();
+    void auswahlGruppeBAntwortD();
 protected:
     virtual void closeEvent ( QCloseEvent* closeargs );
 public:

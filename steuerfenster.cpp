@@ -45,6 +45,16 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( &_punkte, SIGNAL ( punkteGeaendert() ), this, SLOT ( aktualiserePunkteAnzeige() ) );
     connect ( _ui.btnPunkteA, SIGNAL ( clicked() ), this, SLOT ( punkteAendernA() ) );
     connect ( _ui.btnPunkteB, SIGNAL ( clicked() ), this, SLOT ( punkteAendernB() ) );
+    connect ( _ui.btnGruppeAWeg, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeAkeineAntwort() ) );
+    connect ( _ui.btnGruppeAAntwortA, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeAAntwortA() ) );
+    connect ( _ui.btnGruppeAAntwortB, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeAAntwortB() ) );
+    connect ( _ui.btnGruppeAAntwortC, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeAAntwortC() ) );
+    connect ( _ui.btnGruppeAAntwortD, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeAAntwortD() ) );
+    connect ( _ui.btnGruppeBWeg, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBkeineAntwort() ) );
+    connect ( _ui.btnGruppeBAntwortA, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortA() ) );
+    connect ( _ui.btnGruppeBAntwortB, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortB() ) );
+    connect ( _ui.btnGruppeBAntwortC, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortC() ) );
+    connect ( _ui.btnGruppeBAntwortD, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortD() ) );
     _punkte.setzePunkteA ( 0 );
     _punkte.setzePunkteB ( 0 );
     _quiz->show();
@@ -281,12 +291,12 @@ void SteuerFenster::zeigeFrage()
     const size_t nummer = _fl.data ( _ui.lvFragen->currentIndex(), Qt::UserRole ).toUInt();
     const Frage& frage = _fl.constHoleFrage ( nummer );
     _quiz->zeigeFrage ( frage );
-    _ui.lblTitel->setText(frage.getTitel());
-    _ui.lblFrage->setText(frage.getFrage());
-    _ui.lblAntwortA->setText(frage.getAntwortA());
-    _ui.lblAntwortB->setText(frage.getAntwortB());
-    _ui.lblAntwortC->setText(frage.getAntwortC());
-    _ui.lblAntwortD->setText(frage.getAntwortD());
+    _ui.lblTitel->setText ( frage.getTitel() );
+    _ui.lblFrage->setText ( frage.getFrage() );
+    _ui.lblAntwortA->setText ( frage.getAntwortA() );
+    _ui.lblAntwortB->setText ( frage.getAntwortB() );
+    _ui.lblAntwortC->setText ( frage.getAntwortC() );
+    _ui.lblAntwortD->setText ( frage.getAntwortD() );
 }
 
 void SteuerFenster::aktualiserePunkteAnzeige()
@@ -343,4 +353,53 @@ void SteuerFenster::punkteAendernB()
     _punkte.setzePunkteB ( punkte );
 }
 
+void SteuerFenster::auswahlGruppeAkeineAntwort()
+{
+    _quiz->setzeAuswahlA ( QuizFenster::KeineAntwort );
+}
+
+void SteuerFenster::auswahlGruppeAAntwortA()
+{
+    _quiz->setzeAuswahlA ( QuizFenster::AntwortA );
+}
+
+void SteuerFenster::auswahlGruppeAAntwortB()
+{
+    _quiz->setzeAuswahlA ( QuizFenster::AntwortB );
+}
+
+void SteuerFenster::auswahlGruppeAAntwortC()
+{
+    _quiz->setzeAuswahlA ( QuizFenster::AntwortC );
+}
+
+void SteuerFenster::auswahlGruppeAAntwortD()
+{
+    _quiz->setzeAuswahlA ( QuizFenster::AntwortD );
+}
+
+void SteuerFenster::auswahlGruppeBkeineAntwort()
+{
+    _quiz->setzeAuswahlB ( QuizFenster::KeineAntwort );
+}
+
+void SteuerFenster::auswahlGruppeBAntwortA()
+{
+    _quiz->setzeAuswahlB ( QuizFenster::AntwortA );
+}
+
+void SteuerFenster::auswahlGruppeBAntwortB()
+{
+    _quiz->setzeAuswahlB ( QuizFenster::AntwortB );
+}
+
+void SteuerFenster::auswahlGruppeBAntwortC()
+{
+    _quiz->setzeAuswahlB ( QuizFenster::AntwortC );
+}
+
+void SteuerFenster::auswahlGruppeBAntwortD()
+{
+    _quiz->setzeAuswahlB ( QuizFenster::AntwortD );
+}
 #include "steuerfenster.moc"
