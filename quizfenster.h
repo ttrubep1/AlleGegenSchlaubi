@@ -28,11 +28,22 @@
 
 class QuizFenster : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
+public:
+    enum AntwortAuswahl : short unsigned int
+    {
+        KeineAntwort = 0,
+        AntwortA = 1,
+        AntwortB = 2,
+        AntwortC = 3,
+        AntwortD = 4
+    };
 private:
     PunkteAB& _punkte;
     bool _ende;
     Ui::QuizFenster _ui;
+    AntwortAuswahl _auswahlA = KeineAntwort;
+    AntwortAuswahl _auswahlB = KeineAntwort;
 private slots:
     void aktualisierePunktestand();
 protected:
@@ -45,6 +56,8 @@ public:
     QuizFenster& operator= ( const QuizFenster& other ) = delete;
     QuizFenster& operator= ( QuizFenster&& other ) = delete;
     void zeigeFrage ( const Frage& frage );
+    void setzeAuswahlA ( const AntwortAuswahl auswahl );
+    void setzeAuswahlB ( const AntwortAuswahl auswahl );
     void beenden();
 };
 

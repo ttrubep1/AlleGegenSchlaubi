@@ -48,6 +48,8 @@ void QuizFenster::closeEvent ( QCloseEvent* closeargs )
 
 void QuizFenster::zeigeFrage ( const Frage& frage )
 {
+    setzeAuswahlA ( KeineAntwort );
+    setzeAuswahlB ( KeineAntwort );
     _ui.lblFrage->setText ( frage.getFrage() );
     _ui.qkAntwortA->setText ( QString::fromUtf8 ( "A: " ) + frage.getAntwortA() );
     _ui.qkAntwortB->setText ( QString::fromUtf8 ( "B: " ) + frage.getAntwortB() );
@@ -65,6 +67,64 @@ void QuizFenster::aktualisierePunktestand()
         QString::fromUtf8 ( "B: " )
         + QString::number ( _punkte.punkteB(), 10 )
     );
+}
+
+void QuizFenster::setzeAuswahlA ( const QuizFenster::AntwortAuswahl auswahl )
+{
+    if ( _auswahlA == auswahl )
+        return;
+    _auswahlA = auswahl;
+    _ui.qkAntwortA->setGruppeAaktiv ( false );
+    _ui.qkAntwortB->setGruppeAaktiv ( false );
+    _ui.qkAntwortC->setGruppeAaktiv ( false );
+    _ui.qkAntwortD->setGruppeAaktiv ( false );
+    switch ( _auswahlA )
+    {
+    case AntwortA:
+        _ui.qkAntwortA->setGruppeAaktiv ( true );
+        break;
+    case AntwortB:
+        _ui.qkAntwortB->setGruppeAaktiv ( true );
+        break;
+    case AntwortC:
+        _ui.qkAntwortC->setGruppeAaktiv ( true );
+        break;
+    case AntwortD:
+        _ui.qkAntwortD->setGruppeAaktiv ( true );
+        break;
+    case KeineAntwort:
+    default:
+        break;
+    }
+}
+
+void QuizFenster::setzeAuswahlB ( const QuizFenster::AntwortAuswahl auswahl )
+{
+    if ( _auswahlB == auswahl )
+        return;
+    _auswahlB = auswahl;
+    _ui.qkAntwortA->setGruppeBaktiv ( false );
+    _ui.qkAntwortB->setGruppeBaktiv ( false );
+    _ui.qkAntwortC->setGruppeBaktiv ( false );
+    _ui.qkAntwortD->setGruppeBaktiv ( false );
+    switch ( _auswahlB )
+    {
+    case AntwortA:
+        _ui.qkAntwortA->setGruppeBaktiv ( true );
+        break;
+    case AntwortB:
+        _ui.qkAntwortB->setGruppeBaktiv ( true );
+        break;
+    case AntwortC:
+        _ui.qkAntwortC->setGruppeBaktiv ( true );
+        break;
+    case AntwortD:
+        _ui.qkAntwortD->setGruppeBaktiv ( true );
+        break;
+    case KeineAntwort:
+    default:
+        break;
+    }
 }
 
 void QuizFenster::beenden()
