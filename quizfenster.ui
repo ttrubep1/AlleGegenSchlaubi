@@ -182,6 +182,16 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+   <widget class="QuizKnubbel" name="test" native="true">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>50</y>
+      <width>505</width>
+      <height>80</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -195,6 +205,17 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QuizKnubbel</class>
+   <extends>QWidget</extends>
+   <header>quizknubbel.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="local">quizknubbel.h</include>
+ </includes>
  <resources/>
  <connections/>
 </ui>
