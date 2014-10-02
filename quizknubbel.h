@@ -27,6 +27,8 @@ class QuizKnubbel : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY ( QString text READ text WRITE setText )
+    Q_PROPERTY ( bool gruppeAaktiv READ gruppeAaktiv WRITE setGruppeAaktiv )
+    Q_PROPERTY ( bool gruppeBaktiv READ gruppeBaktiv WRITE setGruppeBaktiv )
 private:
     static const int breiteSchraege = 40;
     static const int breiteGruppenBuchstabe = 60;
@@ -36,8 +38,8 @@ private:
     static const int minBreite = 505;
     static const int minHoehe = 100;
     QLabel _text;
-    QLabel _gruppeA;
-    QLabel _gruppeB;
+    QLabel _lblGruppeA;
+    QLabel _lblGruppeB;
     QPoint _polypunkt1;
     QPoint _polypunkt2;
     QPoint _polypunkt3;
@@ -50,6 +52,8 @@ private:
     QPoint _gruppeBPunktMitte;
     QPoint _gruppeBPunktOben;
     QPoint _gruppeBPunktUnten;
+    bool _gruppeAaktiv = false;
+    bool _gruppeBaktiv = false;
 public:
     QuizKnubbel ( QWidget* parentwidget = nullptr );
     ~QuizKnubbel();
@@ -61,6 +65,10 @@ public:
     QuizKnubbel& operator= ( QuizKnubbel&& other ) = delete;
     virtual QString text() const;
     virtual void setText ( const QString& textneu );
+    bool gruppeAaktiv() const;
+    void setGruppeAaktiv ( const bool aktiv );
+    bool gruppeBaktiv() const;
+    void setGruppeBaktiv ( const bool aktiv );
 protected:
     virtual void paintEvent ( QPaintEvent* paintargs );
     virtual void resizeEvent ( QResizeEvent* resizeargs );

@@ -27,14 +27,16 @@
 QuizKnubbel::QuizKnubbel ( QWidget* parentwidget )
     : QWidget ( parentwidget ),
       _text ( this ),
-      _gruppeA ( this ),
-      _gruppeB ( this )
+      _lblGruppeA ( this ),
+      _lblGruppeB ( this )
 {
     _text.setText ( QString::fromUtf8 ( "###TEST###" ) );
-    _gruppeA.setText ( QString::fromUtf8 ( "A" ) );
-    _gruppeB.setText ( QString::fromUtf8 ( "B" ) );
-    _gruppeA.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
-    _gruppeB.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
+    _lblGruppeA.setText ( QString::fromUtf8 ( "A" ) );
+    _lblGruppeB.setText ( QString::fromUtf8 ( "B" ) );
+    _lblGruppeA.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
+    _lblGruppeB.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
+    _lblGruppeA.hide();
+    _lblGruppeB.hide();
 }
 
 QuizKnubbel::~QuizKnubbel()
@@ -59,14 +61,20 @@ void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
     //zeichner.drawRect ( 0, 0, width()-1, height()-1 );
     QPoint rahmen[] = {_polypunkt1, _polypunkt2, _polypunkt3, _polypunkt4, _polypunkt5, _polypunkt6};
     zeichner.drawConvexPolygon ( rahmen, 6 );
-    zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktOben );
-    zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktUnten );
-    zeichner.drawLine ( _gruppeAPunktOben, _polypunkt2 );
-    zeichner.drawLine ( _gruppeAPunktUnten, _polypunkt6 );
-    zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktOben );
-    zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktUnten );
-    zeichner.drawLine ( _gruppeBPunktOben, _polypunkt3 );
-    zeichner.drawLine ( _gruppeBPunktUnten, _polypunkt5 );
+    if ( _gruppeAaktiv )
+    {
+        zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktOben );
+        zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktUnten );
+        zeichner.drawLine ( _gruppeAPunktOben, _polypunkt2 );
+        zeichner.drawLine ( _gruppeAPunktUnten, _polypunkt6 );
+    }
+    if ( _gruppeBaktiv )
+    {
+        zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktOben );
+        zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktUnten );
+        zeichner.drawLine ( _gruppeBPunktOben, _polypunkt3 );
+        zeichner.drawLine ( _gruppeBPunktUnten, _polypunkt5 );
+    }
 }
 
 void QuizKnubbel::resizeEvent ( QResizeEvent* resizeargs )
@@ -78,13 +86,13 @@ void QuizKnubbel::resizeEvent ( QResizeEvent* resizeargs )
         width() - breiteGruppenBuchstabe - breiteSchraege,
         height() - 2*hoeheTextRand
     );
-    _gruppeA.setGeometry (
+    _lblGruppeA.setGeometry (
         breiteSchraege - versatzGruppenBuchstabe,
         hoeheTextRand,
         breiteGruppenBuchstabe,
         height() - 2*hoeheTextRand
     );
-    _gruppeB.setGeometry (
+    _lblGruppeB.setGeometry (
         width() - breiteSchraege - 1,
         hoeheTextRand,
         breiteGruppenBuchstabe,
@@ -135,6 +143,30 @@ QString QuizKnubbel::text() const
 void QuizKnubbel::setText ( const QString& textneu )
 {
     _text.setText ( textneu );
+}
+
+bool QuizKnubbel::gruppeAaktiv() const
+{
+    return _gruppeAaktiv;
+}
+
+void QuizKnubbel::setGruppeAaktiv ( const bool aktiv )
+{
+    _gruppeAaktiv = aktiv;
+    _lblGruppeA.setVisible(_gruppeAaktiv);
+    update();
+}
+
+bool QuizKnubbel::gruppeBaktiv() const
+{
+    return _gruppeBaktiv;
+}
+
+void QuizKnubbel::setGruppeBaktiv ( const bool aktiv )
+{
+    _gruppeBaktiv = aktiv;
+    _lblGruppeB.setVisible(_gruppeBaktiv);
+    update();
 }
 
 #include "quizknubbel.moc"
