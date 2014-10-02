@@ -33,6 +33,8 @@ private:
     static const int hoeheTextRand = 10;
     static const int versatzGruppenBuchstabe = 12;
     static const int schriftGroesseGruppenBuchstabe = 22;
+    static const int minBreite = 505;
+    static const int minHoehe = 100;
     QLabel _text;
     QLabel _gruppeA;
     QLabel _gruppeB;

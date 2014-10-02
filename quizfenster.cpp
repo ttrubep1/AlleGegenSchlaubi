@@ -49,10 +49,10 @@ void QuizFenster::closeEvent ( QCloseEvent* closeargs )
 void QuizFenster::zeigeFrage ( const Frage& frage )
 {
     _ui.lblFrage->setText ( frage.getFrage() );
-    _ui.lblAntwortA->setText ( frage.getAntwortA() );
-    _ui.lblAntwortB->setText ( frage.getAntwortB() );
-    _ui.lblAntwortC->setText ( frage.getAntwortC() );
-    _ui.lblAntwortD->setText ( frage.getAntwortD() );
+    _ui.qkAntwortA->setText ( QString::fromUtf8 ( "A: " ) + frage.getAntwortA() );
+    _ui.qkAntwortB->setText ( QString::fromUtf8 ( "B: " ) + frage.getAntwortB() );
+    _ui.qkAntwortC->setText ( QString::fromUtf8 ( "C: " ) + frage.getAntwortC() );
+    _ui.qkAntwortD->setText ( QString::fromUtf8 ( "D: " ) + frage.getAntwortD() );
 }
 
 void QuizFenster::aktualisierePunktestand()

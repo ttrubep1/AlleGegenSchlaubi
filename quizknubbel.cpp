@@ -44,12 +44,12 @@ QuizKnubbel::~QuizKnubbel()
 
 QSize QuizKnubbel::sizeHint()
 {
-    return QSize ( 505, 80 ); // FIXME: Sinnvolle Werte eintragen
+    return QSize ( minBreite, minHoehe );
 }
 
 QSize QuizKnubbel::minimumSizeHint()
 {
-    return QSize ( 100, 50 ); // FIXME: Sinnvolle Werte eintragen
+    return QSize ( minBreite, minHoehe );
 }
 
 void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
