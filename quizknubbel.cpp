@@ -57,16 +57,16 @@ void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
     QWidget::paintEvent ( paintargs );
     QPainter zeichner ( this );
     //zeichner.drawRect ( 0, 0, width()-1, height()-1 );
-    QPoint rahmen[] = {polypunkt1, polypunkt2, polypunkt3, polypunkt4, polypunkt5, polypunkt6};
+    QPoint rahmen[] = {_polypunkt1, _polypunkt2, _polypunkt3, _polypunkt4, _polypunkt5, _polypunkt6};
     zeichner.drawConvexPolygon ( rahmen, 6 );
-    zeichner.drawLine ( gruppeAPunktMitte, gruppeAPunktOben );
-    zeichner.drawLine ( gruppeAPunktMitte, gruppeAPunktUnten );
-    zeichner.drawLine ( gruppeAPunktOben, polypunkt2 );
-    zeichner.drawLine ( gruppeAPunktUnten, polypunkt6 );
-    zeichner.drawLine ( gruppeBPunktMitte, gruppeBPunktOben );
-    zeichner.drawLine ( gruppeBPunktMitte, gruppeBPunktUnten );
-    zeichner.drawLine ( gruppeBPunktOben, polypunkt3 );
-    zeichner.drawLine ( gruppeBPunktUnten, polypunkt5 );
+    zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktOben );
+    zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktUnten );
+    zeichner.drawLine ( _gruppeAPunktOben, _polypunkt2 );
+    zeichner.drawLine ( _gruppeAPunktUnten, _polypunkt6 );
+    zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktOben );
+    zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktUnten );
+    zeichner.drawLine ( _gruppeBPunktOben, _polypunkt3 );
+    zeichner.drawLine ( _gruppeBPunktUnten, _polypunkt5 );
 }
 
 void QuizKnubbel::resizeEvent ( QResizeEvent* resizeargs )
@@ -90,30 +90,30 @@ void QuizKnubbel::resizeEvent ( QResizeEvent* resizeargs )
         breiteGruppenBuchstabe,
         height() - 2*hoeheTextRand
     );
-    polypunkt1.setX ( breiteGruppenBuchstabe );
-    polypunkt1.setY ( ( height()-1 ) /2 );
-    polypunkt2.setX ( breiteGruppenBuchstabe + breiteSchraege );
-    polypunkt2.setY ( 0 );
-    polypunkt3.setX ( width() - breiteGruppenBuchstabe - breiteSchraege - 1 );
-    polypunkt3.setY ( 0 );
-    polypunkt4.setX ( width() - breiteGruppenBuchstabe - 1 );
-    polypunkt4.setY ( ( height()-1 ) /2 );
-    polypunkt5.setX ( width() - breiteGruppenBuchstabe - breiteSchraege - 1 );
-    polypunkt5.setY ( height() - 1 );
-    polypunkt6.setX ( breiteGruppenBuchstabe + breiteSchraege );
-    polypunkt6.setY ( height() - 1 );
-    gruppeAPunktMitte.setX ( 0 );
-    gruppeAPunktMitte.setY ( ( height()-1 ) /2 );
-    gruppeAPunktOben.setX ( breiteSchraege );
-    gruppeAPunktOben.setY ( 0 );
-    gruppeAPunktUnten.setX ( breiteSchraege );
-    gruppeAPunktUnten.setY ( height() - 1 );
-    gruppeBPunktMitte.setX ( width() - 1 );
-    gruppeBPunktMitte.setY ( ( height()-1 ) /2 );
-    gruppeBPunktOben.setX ( width() - breiteSchraege - 1 );
-    gruppeBPunktOben.setY ( 0 );
-    gruppeBPunktUnten.setX ( width() - breiteSchraege - 1 );
-    gruppeBPunktUnten.setY ( height() - 1 );
+    _polypunkt1.setX ( breiteGruppenBuchstabe );
+    _polypunkt1.setY ( ( height()-1 ) /2 );
+    _polypunkt2.setX ( breiteGruppenBuchstabe + breiteSchraege );
+    _polypunkt2.setY ( 0 );
+    _polypunkt3.setX ( width() - breiteGruppenBuchstabe - breiteSchraege - 1 );
+    _polypunkt3.setY ( 0 );
+    _polypunkt4.setX ( width() - breiteGruppenBuchstabe - 1 );
+    _polypunkt4.setY ( ( height()-1 ) /2 );
+    _polypunkt5.setX ( width() - breiteGruppenBuchstabe - breiteSchraege - 1 );
+    _polypunkt5.setY ( height() - 1 );
+    _polypunkt6.setX ( breiteGruppenBuchstabe + breiteSchraege );
+    _polypunkt6.setY ( height() - 1 );
+    _gruppeAPunktMitte.setX ( 0 );
+    _gruppeAPunktMitte.setY ( ( height()-1 ) /2 );
+    _gruppeAPunktOben.setX ( breiteSchraege );
+    _gruppeAPunktOben.setY ( 0 );
+    _gruppeAPunktUnten.setX ( breiteSchraege );
+    _gruppeAPunktUnten.setY ( height() - 1 );
+    _gruppeBPunktMitte.setX ( width() - 1 );
+    _gruppeBPunktMitte.setY ( ( height()-1 ) /2 );
+    _gruppeBPunktOben.setX ( width() - breiteSchraege - 1 );
+    _gruppeBPunktOben.setY ( 0 );
+    _gruppeBPunktUnten.setX ( width() - breiteSchraege - 1 );
+    _gruppeBPunktUnten.setY ( height() - 1 );
 }
 
 void QuizKnubbel::fontChange ( const QFont& fontneu )
