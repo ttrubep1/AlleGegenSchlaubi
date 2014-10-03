@@ -48,6 +48,7 @@ void QuizFenster::closeEvent ( QCloseEvent* closeargs )
 
 void QuizFenster::zeigeFrage ( const Frage& frage )
 {
+    loescheRichtig();
     setzeAuswahlA ( KeineAntwort );
     setzeAuswahlB ( KeineAntwort );
     _ui.lblFrage->setText ( frage.getFrage() );
@@ -125,6 +126,34 @@ void QuizFenster::setzeAuswahlB ( const QuizFenster::AntwortAuswahl auswahl )
     default:
         break;
     }
+}
+
+void QuizFenster::setzeRichtig ( const Frage::RichtigeAntwort richtig )
+{
+    loescheRichtig();
+    switch ( richtig )
+    {
+    case Frage::Arichtig:
+        _ui.qkAntwortA->setRichtig ( true );
+        break;
+    case Frage::Brichtig:
+        _ui.qkAntwortB->setRichtig ( true );
+        break;
+    case Frage::Crichtig:
+        _ui.qkAntwortC->setRichtig ( true );
+        break;
+    case Frage::Drichtig:
+        _ui.qkAntwortD->setRichtig ( true );
+        break;
+    }
+}
+
+void QuizFenster::loescheRichtig()
+{
+    _ui.qkAntwortA->setRichtig ( false );
+    _ui.qkAntwortB->setRichtig ( false );
+    _ui.qkAntwortC->setRichtig ( false );
+    _ui.qkAntwortD->setRichtig ( false );
 }
 
 void QuizFenster::beenden()

@@ -36,6 +36,9 @@ private:
     PunkteAB _punkte;
     bool _ungespeichert;
     QuizFenster* _quiz;
+    Frage _aktuelleFrage;
+    QuizFenster::AntwortAuswahl _auswahlA = QuizFenster::KeineAntwort;
+    QuizFenster::AntwortAuswahl _auswahlB = QuizFenster::KeineAntwort;
 private slots:
     void neueFrage();
     void bearbeiteFrage();
@@ -46,6 +49,7 @@ private slots:
     void speichereFragen();
     void zeigeFragenVorschau() const;
     void zeigeFrage();
+    void zeigeErgebnis();
     void aktualiserePunkteAnzeige();
     void punkteAendernA();
     void punkteAendernB();
@@ -59,6 +63,7 @@ private slots:
     void auswahlGruppeBAntwortB();
     void auswahlGruppeBAntwortC();
     void auswahlGruppeBAntwortD();
+    void auswertungAntwort();
 protected:
     virtual void closeEvent ( QCloseEvent* closeargs );
 public:

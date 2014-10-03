@@ -23,12 +23,14 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTimer>
 
 #include "fragebearbeiten.h"
 
 SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwidget ),
     _ungespeichert ( false ),
-    _quiz ( new QuizFenster ( _punkte ) )
+    _quiz ( new QuizFenster ( _punkte ) ),
+    _aktuelleFrage ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig ) // Leeres Frage-Objekt
 {
     _ui.setupUi ( this );
 
@@ -55,6 +57,7 @@ SteuerFenster::SteuerFenster ( QWidget* parentwidget ) : QMainWindow ( parentwid
     connect ( _ui.btnGruppeBAntwortB, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortB() ) );
     connect ( _ui.btnGruppeBAntwortC, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortC() ) );
     connect ( _ui.btnGruppeBAntwortD, SIGNAL ( clicked() ), this, SLOT ( auswahlGruppeBAntwortD() ) );
+    connect ( _ui.btnErgebnisZeigen, SIGNAL ( clicked() ), this, SLOT ( zeigeErgebnis() ) );
     _punkte.setzePunkteA ( 0 );
     _punkte.setzePunkteB ( 0 );
     _quiz->show();
@@ -92,6 +95,15 @@ void SteuerFenster::neueFrage()
     Frage neu ( QString(), QString(), QString(), QString(), QString(), QString(), Frage::Arichtig );
     if ( FrageBearbeiten::bearbeiteFrage ( neu, *this ) )
     {
+        if ( neu.getTitel().trimmed() == QString() )
+        {
+            QMessageBox::warning (
+                this,
+                QString::fromUtf8 ( "Leere Frage" ),
+                QString::fromUtf8 ( "Der Titel dieser Frage ist leer, dies ist nicht zulässig." )
+            );
+            return;
+        }
         _fl.neueFrage ( std::move ( neu ) );
         _ungespeichert = true;
     }
@@ -297,6 +309,47 @@ void SteuerFenster::zeigeFrage()
     _ui.lblAntwortB->setText ( frage.getAntwortB() );
     _ui.lblAntwortC->setText ( frage.getAntwortC() );
     _ui.lblAntwortD->setText ( frage.getAntwortD() );
+    _aktuelleFrage = frage;
+    _auswahlA = QuizFenster::KeineAntwort;
+    _auswahlB = QuizFenster::KeineAntwort;
+    _ui.btnErgebnisZeigen->setEnabled ( true );
+}
+
+void SteuerFenster::zeigeErgebnis()
+{
+    if ( _aktuelleFrage.getTitel() == QString() )
+    {
+        QMessageBox::warning (
+            this,
+            QString::fromUtf8 ( "Keine Frage angezeigt" ),
+            QString::fromUtf8 ( "Aktuell wird gar keine Frage im Quiz-Fenster angezeigt, daher kann auch kein Ergebnis gezeigt werden!" )
+        );
+        return;
+    }
+    if ( _auswahlA == QuizFenster::KeineAntwort || _auswahlB == QuizFenster::KeineAntwort )
+    {
+        const QMessageBox::StandardButton antwort = QMessageBox::question (
+                    this,
+                    QString::fromUtf8 ( "Fehlende Antwort" ),
+                    QString::fromUtf8 ( "Mindestens eine Gruppe hat noch nicht geantwortet!\n\nSoll das Ergebnis trotzdem angezeigt werden?" ),
+		    QMessageBox::Yes | QMessageBox::No
+                );
+        if ( antwort != QMessageBox::Yes )
+            return;
+    }
+    _quiz->setzeRichtig ( _aktuelleFrage.getRichtig() );
+    _ui.btnFrageAnzeigen->setEnabled ( false );
+    _ui.btnErgebnisZeigen->setEnabled ( false );
+    QTimer::singleShot ( 2000, this, SLOT ( auswertungAntwort() ) ); // Steigert die Spannung
+}
+
+void SteuerFenster::auswertungAntwort()
+{
+    if ( ( unsigned short int ) _aktuelleFrage.getRichtig() == ( unsigned short int ) _auswahlA )
+        _punkte.punkteAplusEins();
+    if ( ( unsigned short int ) _aktuelleFrage.getRichtig() == ( unsigned short int ) _auswahlB )
+        _punkte.punkteBplusEins();
+    _ui.btnFrageAnzeigen->setEnabled ( true );
 }
 
 void SteuerFenster::aktualiserePunkteAnzeige()
@@ -356,50 +409,60 @@ void SteuerFenster::punkteAendernB()
 void SteuerFenster::auswahlGruppeAkeineAntwort()
 {
     _quiz->setzeAuswahlA ( QuizFenster::KeineAntwort );
+    _auswahlA = QuizFenster::KeineAntwort;
 }
 
 void SteuerFenster::auswahlGruppeAAntwortA()
 {
     _quiz->setzeAuswahlA ( QuizFenster::AntwortA );
+    _auswahlA = QuizFenster::AntwortA;
 }
 
 void SteuerFenster::auswahlGruppeAAntwortB()
 {
     _quiz->setzeAuswahlA ( QuizFenster::AntwortB );
+    _auswahlA = QuizFenster::AntwortB;
 }
 
 void SteuerFenster::auswahlGruppeAAntwortC()
 {
     _quiz->setzeAuswahlA ( QuizFenster::AntwortC );
+    _auswahlA = QuizFenster::AntwortC;
 }
 
 void SteuerFenster::auswahlGruppeAAntwortD()
 {
     _quiz->setzeAuswahlA ( QuizFenster::AntwortD );
+    _auswahlA = QuizFenster::AntwortD;
 }
 
 void SteuerFenster::auswahlGruppeBkeineAntwort()
 {
     _quiz->setzeAuswahlB ( QuizFenster::KeineAntwort );
+    _auswahlB = QuizFenster::KeineAntwort;
 }
 
 void SteuerFenster::auswahlGruppeBAntwortA()
 {
     _quiz->setzeAuswahlB ( QuizFenster::AntwortA );
+    _auswahlB = QuizFenster::AntwortA;
 }
 
 void SteuerFenster::auswahlGruppeBAntwortB()
 {
     _quiz->setzeAuswahlB ( QuizFenster::AntwortB );
+    _auswahlB = QuizFenster::AntwortB;
 }
 
 void SteuerFenster::auswahlGruppeBAntwortC()
 {
     _quiz->setzeAuswahlB ( QuizFenster::AntwortC );
+    _auswahlB = QuizFenster::AntwortC;
 }
 
 void SteuerFenster::auswahlGruppeBAntwortD()
 {
     _quiz->setzeAuswahlB ( QuizFenster::AntwortD );
+    _auswahlB = QuizFenster::AntwortD;
 }
 #include "steuerfenster.moc"

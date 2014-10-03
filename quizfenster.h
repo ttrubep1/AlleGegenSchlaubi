@@ -58,6 +58,8 @@ public:
     void zeigeFrage ( const Frage& frage );
     void setzeAuswahlA ( const AntwortAuswahl auswahl );
     void setzeAuswahlB ( const AntwortAuswahl auswahl );
+    void setzeRichtig ( const Frage::RichtigeAntwort richtig );
+    void loescheRichtig();
     void beenden();
 };
 
