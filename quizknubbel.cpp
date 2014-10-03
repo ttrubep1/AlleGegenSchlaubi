@@ -228,13 +228,14 @@ void QuizKnubbel::setRichtig ( const bool istrichtig )
     {
         blende->setStartValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
         blende->setEndValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
+	blende->setDuration ( dauerAnimationRichtig );
     }
     else
     {
         blende->setStartValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
         blende->setEndValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
+	blende->setDuration ( dauerAnimation );
     }
-    blende->setDuration ( dauerAnimation );
     blende->start ( QAbstractAnimation::DeleteWhenStopped );
 }
 

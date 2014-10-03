@@ -45,6 +45,7 @@ private:
     static const Qt::GlobalColor farbeNormal = Qt::white;
     static const Qt::GlobalColor farbeRichtig = Qt::green;
     static const int dauerAnimation = 500; // Millisekunden
+    static const int dauerAnimationRichtig = 2000; // Millisekunden
     QLabel _text;
     QLabel _lblGruppeA;
     QLabel _lblGruppeB;
