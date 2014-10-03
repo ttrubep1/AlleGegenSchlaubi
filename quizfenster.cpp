@@ -28,6 +28,11 @@ QuizFenster::QuizFenster ( PunkteAB& punkte )
 {
     _ui.setupUi ( this );
     connect ( &_punkte, SIGNAL ( punkteGeaendert() ), this, SLOT ( aktualisierePunktestand() ) );
+    _ui.qkFrage->setText ( QString::fromUtf8 ( "Willkommen bei \"Alle Gegen Schlaubi\"" ) );
+    _ui.qkAntwortA->setText ( QString::fromUtf8 ( "Antwort A" ) );
+    _ui.qkAntwortB->setText ( QString::fromUtf8 ( "Antwort B" ) );
+    _ui.qkAntwortC->setText ( QString::fromUtf8 ( "Antwort C" ) );
+    _ui.qkAntwortD->setText ( QString::fromUtf8 ( "Antwort D" ) );
 }
 
 QuizFenster::~QuizFenster()
@@ -51,7 +56,7 @@ void QuizFenster::zeigeFrage ( const Frage& frage )
     loescheRichtig();
     setzeAuswahlA ( KeineAntwort );
     setzeAuswahlB ( KeineAntwort );
-    _ui.lblFrage->setText ( frage.getFrage() );
+    _ui.qkFrage->setText ( frage.getFrage() );
     _ui.qkAntwortA->setText ( QString::fromUtf8 ( "A: " ) + frage.getAntwortA() );
     _ui.qkAntwortB->setText ( QString::fromUtf8 ( "B: " ) + frage.getAntwortB() );
     _ui.qkAntwortC->setText ( QString::fromUtf8 ( "C: " ) + frage.getAntwortC() );

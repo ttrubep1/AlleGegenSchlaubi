@@ -27,6 +27,7 @@ class QuizKnubbel : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY ( QString text READ text WRITE setText )
+    Q_PROPERTY ( Qt::Alignment alignment READ alignment WRITE setAlignment )
     Q_PROPERTY ( bool gruppeAaktiv READ gruppeAaktiv WRITE setGruppeAaktiv )
     Q_PROPERTY ( bool gruppeBaktiv READ gruppeBaktiv WRITE setGruppeBaktiv )
     Q_PROPERTY ( bool richtig READ richtig WRITE setRichtig )
@@ -83,6 +84,8 @@ public:
     QuizKnubbel& operator= ( QuizKnubbel&& other ) = delete;
     virtual QString text() const;
     virtual void setText ( const QString& textneu );
+    Qt::Alignment alignment() const;
+    void setAlignment ( const Qt::Alignment ausrichtung );
     bool gruppeAaktiv() const;
     void setGruppeAaktiv ( const bool aktiv );
     bool gruppeBaktiv() const;

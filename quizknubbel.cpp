@@ -153,6 +153,16 @@ void QuizKnubbel::setText ( const QString& textneu )
     _text.setText ( textneu );
 }
 
+Qt::Alignment QuizKnubbel::alignment() const
+{
+    return _text.alignment();
+}
+
+void QuizKnubbel::setAlignment ( const Qt::Alignment ausrichtung )
+{
+    _text.setAlignment ( ausrichtung );
+}
+
 bool QuizKnubbel::gruppeAaktiv() const
 {
     return _gruppeAaktiv;
