@@ -29,6 +29,8 @@ class QuizKnubbel : public QWidget
     Q_PROPERTY ( QString text READ text WRITE setText )
     Q_PROPERTY ( bool gruppeAaktiv READ gruppeAaktiv WRITE setGruppeAaktiv )
     Q_PROPERTY ( bool gruppeBaktiv READ gruppeBaktiv WRITE setGruppeBaktiv )
+    Q_PROPERTY ( double opazitaetGruppeA READ opazitaetGruppeA WRITE setOpazitaetGruppeA )
+    Q_PROPERTY ( double opazitaetGruppeB READ opazitaetGruppeB WRITE setOpazitaetGruppeB )
 private:
     static const int breiteSchraege = 40;
     static const int breiteGruppenBuchstabe = 60;
@@ -38,6 +40,7 @@ private:
     static const int minBreite = 505;
     static const int minHoehe = 100;
     static const Qt::GlobalColor farbeHintergrund = Qt::white;
+    static const int dauerAnimation = 500; // Millisekunden
     QLabel _text;
     QLabel _lblGruppeA;
     QLabel _lblGruppeB;
@@ -55,6 +58,13 @@ private:
     QPoint _gruppeBPunktUnten;
     bool _gruppeAaktiv = false;
     bool _gruppeBaktiv = false;
+    double _opazitaetGruppeA = -1.0; // Startwert, wird im Konstruktor überschrieben
+    double _opazitaetGruppeB = -1.0; // dito
+protected:
+    double opazitaetGruppeA() const;
+    void setOpazitaetGruppeA ( const double opazitaet );
+    double opazitaetGruppeB() const;
+    void setOpazitaetGruppeB ( const double opazitaet );
 public:
     QuizKnubbel ( QWidget* parentwidget = nullptr );
     ~QuizKnubbel();

@@ -19,6 +19,7 @@
 
 #include <QPainter>
 #include <QPaintEvent>
+#include <QPropertyAnimation>
 #include <QResizeEvent>
 #include <QTimer>
 
@@ -35,8 +36,8 @@ QuizKnubbel::QuizKnubbel ( QWidget* parentwidget )
     _lblGruppeB.setText ( QString::fromUtf8 ( "B" ) );
     _lblGruppeA.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
     _lblGruppeB.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
-    _lblGruppeA.hide();
-    _lblGruppeB.hide();
+    setOpazitaetGruppeA ( 0.0 );
+    setOpazitaetGruppeB ( 0.0 );
 }
 
 QuizKnubbel::~QuizKnubbel()
@@ -68,14 +69,17 @@ void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
     //zeichner.drawRect ( 0, 0, width()-1, height()-1 );
     QPoint rahmen[] = {_polypunkt1, _polypunkt2, _polypunkt3, _polypunkt4, _polypunkt5, _polypunkt6};
     zeichner.drawConvexPolygon ( rahmen, 6 );
-    if ( _gruppeAaktiv )
+    if ( _opazitaetGruppeA > 0.0 )
     {
+
         QPoint gruppeA[] = { _gruppeAPunktMitte, _gruppeAPunktOben, _polypunkt2, _polypunkt1, _polypunkt6, _gruppeAPunktUnten };
+        zeichner.setOpacity ( _opazitaetGruppeA );
         zeichner.drawPolygon ( gruppeA, 6 );
     }
-    if ( _gruppeBaktiv )
+    if ( _opazitaetGruppeB > 0.0 )
     {
         QPoint gruppeB[] = { _gruppeBPunktMitte, _gruppeBPunktOben, _polypunkt3, _polypunkt4, _polypunkt5, _gruppeBPunktUnten };
+        zeichner.setOpacity ( _opazitaetGruppeB );
         zeichner.drawPolygon ( gruppeB, 6 );
     }
 }
@@ -155,9 +159,22 @@ bool QuizKnubbel::gruppeAaktiv() const
 
 void QuizKnubbel::setGruppeAaktiv ( const bool aktiv )
 {
+    if ( _gruppeAaktiv == aktiv )
+        return;
     _gruppeAaktiv = aktiv;
-    _lblGruppeA.setVisible ( _gruppeAaktiv );
-    update();
+    QPropertyAnimation* blende = new QPropertyAnimation ( this, "opazitaetGruppeA", this );
+    if ( _gruppeAaktiv ) // einblenden
+    {
+        blende->setStartValue ( QVariant::fromValue<double> ( 0.0 ) );
+        blende->setEndValue ( QVariant::fromValue<double> ( 1.0 ) );
+    }
+    else // ausblenden
+    {
+        blende->setStartValue ( QVariant::fromValue<double> ( 1.0 ) );
+        blende->setEndValue ( QVariant::fromValue<double> ( 0.0 ) );
+    }
+    blende->setDuration ( dauerAnimation );
+    blende->start ( QAbstractAnimation::DeleteWhenStopped );
 }
 
 bool QuizKnubbel::gruppeBaktiv() const
@@ -167,9 +184,71 @@ bool QuizKnubbel::gruppeBaktiv() const
 
 void QuizKnubbel::setGruppeBaktiv ( const bool aktiv )
 {
+    if ( _gruppeBaktiv == aktiv )
+        return;
     _gruppeBaktiv = aktiv;
-    _lblGruppeB.setVisible ( _gruppeBaktiv );
+    QPropertyAnimation* blende = new QPropertyAnimation ( this, "opazitaetGruppeB", this );
+    if ( _gruppeBaktiv ) // einblenden
+    {
+        blende->setStartValue ( QVariant::fromValue<double> ( 0.0 ) );
+        blende->setEndValue ( QVariant::fromValue<double> ( 1.0 ) );
+    }
+    else // ausblenden
+    {
+        blende->setStartValue ( QVariant::fromValue<double> ( 1.0 ) );
+        blende->setEndValue ( QVariant::fromValue<double> ( 0.0 ) );
+    }
+    blende->setDuration ( dauerAnimation);
+    blende->start ( QAbstractAnimation::DeleteWhenStopped );
+}
+
+double QuizKnubbel::opazitaetGruppeA() const
+{
+    return _opazitaetGruppeA;
+}
+
+void QuizKnubbel::setOpazitaetGruppeA ( const double opazitaet )
+{
+    if ( _opazitaetGruppeA == opazitaet )
+        return;
+    _opazitaetGruppeA = opazitaet;
+    QPalette labelpalette = _lblGruppeA.palette();
+    const QColor farbe = labelpalette.color ( _lblGruppeA.foregroundRole() );
+    labelpalette.setColor (
+        _lblGruppeA.foregroundRole(),
+        QColor (
+            farbe.red(),
+            farbe.green(),
+            farbe.blue(),
+            ( int ) ( _opazitaetGruppeA * ( double ) 255 ) // Opazität ist eine Komma-Zahl zwischen 0 und 1 und der Alpha-Wert eine Ganzzahl zwischen 0 und 255
+        )
+    );
+    _lblGruppeA.setPalette ( labelpalette );
     update();
 }
 
+double QuizKnubbel::opazitaetGruppeB() const
+{
+    return _opazitaetGruppeB;
+}
+
+void QuizKnubbel::setOpazitaetGruppeB ( const double opazitaet )
+{
+    if ( _opazitaetGruppeB == opazitaet )
+        return;
+    _opazitaetGruppeB = opazitaet;
+    QPalette labelpalette = _lblGruppeB.palette();
+    const QColor farbe = labelpalette.color ( _lblGruppeB.foregroundRole() );
+    labelpalette.setColor (
+        _lblGruppeB.foregroundRole(),
+        QColor (
+            farbe.red(),
+            farbe.green(),
+            farbe.blue(),
+            ( int ) ( _opazitaetGruppeB * ( double ) 255 ) // Opazität ist eine Komma-Zahl zwischen 0 und 1 und der Alpha-Wert eine Ganzzahl zwischen 0 und 255
+        )
+    );
+    _lblGruppeB.setPalette ( labelpalette );
+    update();
+}
 #include "quizknubbel.moc"
