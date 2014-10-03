@@ -38,6 +38,7 @@ QuizKnubbel::QuizKnubbel ( QWidget* parentwidget )
     _lblGruppeB.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
     setOpazitaetGruppeA ( 0.0 );
     setOpazitaetGruppeB ( 0.0 );
+    _farbe = farbeNormal;
 }
 
 QuizKnubbel::~QuizKnubbel()
@@ -64,7 +65,7 @@ void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
     QBrush pinsel ( zeichner.brush() );
     QPen stift ( zeichner.pen() );
     pinsel.setStyle ( Qt::SolidPattern );
-    pinsel.setColor ( farbeHintergrund );
+    pinsel.setColor ( _farbe );
     zeichner.setBrush ( pinsel );
     //zeichner.drawRect ( 0, 0, width()-1, height()-1 );
     QPoint rahmen[] = {_polypunkt1, _polypunkt2, _polypunkt3, _polypunkt4, _polypunkt5, _polypunkt6};
@@ -198,7 +199,32 @@ void QuizKnubbel::setGruppeBaktiv ( const bool aktiv )
         blende->setStartValue ( QVariant::fromValue<double> ( 1.0 ) );
         blende->setEndValue ( QVariant::fromValue<double> ( 0.0 ) );
     }
-    blende->setDuration ( dauerAnimation);
+    blende->setDuration ( dauerAnimation );
+    blende->start ( QAbstractAnimation::DeleteWhenStopped );
+}
+
+bool QuizKnubbel::richtig() const
+{
+    return _richtig;
+}
+
+void QuizKnubbel::setRichtig ( const bool istrichtig )
+{
+    if ( _richtig == istrichtig )
+        return;
+    _richtig = istrichtig;
+    QPropertyAnimation* blende = new QPropertyAnimation ( this, "farbeHintergrund", this );
+    if ( _richtig )
+    {
+        blende->setStartValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
+        blende->setEndValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
+    }
+    else
+    {
+        blende->setStartValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
+        blende->setEndValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
+    }
+    blende->setDuration ( dauerAnimation );
     blende->start ( QAbstractAnimation::DeleteWhenStopped );
 }
 
@@ -251,4 +277,18 @@ void QuizKnubbel::setOpazitaetGruppeB ( const double opazitaet )
     _lblGruppeB.setPalette ( labelpalette );
     update();
 }
+
+QColor QuizKnubbel::farbeHintergrund() const
+{
+    return _farbe;
+}
+
+void QuizKnubbel::setFarbeHintergrund ( const QColor& farbe )
+{
+    if ( _farbe == farbe )
+        return;
+    _farbe = farbe;
+    update();
+}
+
 #include "quizknubbel.moc"

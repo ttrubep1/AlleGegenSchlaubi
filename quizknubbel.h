@@ -29,8 +29,10 @@ class QuizKnubbel : public QWidget
     Q_PROPERTY ( QString text READ text WRITE setText )
     Q_PROPERTY ( bool gruppeAaktiv READ gruppeAaktiv WRITE setGruppeAaktiv )
     Q_PROPERTY ( bool gruppeBaktiv READ gruppeBaktiv WRITE setGruppeBaktiv )
+    Q_PROPERTY ( bool richtig READ richtig WRITE setRichtig )
     Q_PROPERTY ( double opazitaetGruppeA READ opazitaetGruppeA WRITE setOpazitaetGruppeA )
     Q_PROPERTY ( double opazitaetGruppeB READ opazitaetGruppeB WRITE setOpazitaetGruppeB )
+    Q_PROPERTY ( QColor farbeHintergrund READ farbeHintergrund WRITE setFarbeHintergrund )
 private:
     static const int breiteSchraege = 40;
     static const int breiteGruppenBuchstabe = 60;
@@ -39,7 +41,8 @@ private:
     static const int schriftGroesseGruppenBuchstabe = 22;
     static const int minBreite = 505;
     static const int minHoehe = 100;
-    static const Qt::GlobalColor farbeHintergrund = Qt::white;
+    static const Qt::GlobalColor farbeNormal = Qt::white;
+    static const Qt::GlobalColor farbeRichtig = Qt::green;
     static const int dauerAnimation = 500; // Millisekunden
     QLabel _text;
     QLabel _lblGruppeA;
@@ -60,11 +63,15 @@ private:
     bool _gruppeBaktiv = false;
     double _opazitaetGruppeA = -1.0; // Startwert, wird im Konstruktor überschrieben
     double _opazitaetGruppeB = -1.0; // dito
+    bool _richtig = false;
+    QColor _farbe;
 protected:
     double opazitaetGruppeA() const;
     void setOpazitaetGruppeA ( const double opazitaet );
     double opazitaetGruppeB() const;
     void setOpazitaetGruppeB ( const double opazitaet );
+    QColor farbeHintergrund() const;
+    void setFarbeHintergrund ( const QColor& farbe );
 public:
     QuizKnubbel ( QWidget* parentwidget = nullptr );
     ~QuizKnubbel();
@@ -80,6 +87,8 @@ public:
     void setGruppeAaktiv ( const bool aktiv );
     bool gruppeBaktiv() const;
     void setGruppeBaktiv ( const bool aktiv );
+    bool richtig() const;
+    void setRichtig ( const bool istrichtig );
 protected:
     virtual void paintEvent ( QPaintEvent* paintargs );
     virtual void resizeEvent ( QResizeEvent* resizeargs );
