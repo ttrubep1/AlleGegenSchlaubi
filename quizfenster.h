@@ -48,6 +48,7 @@ private slots:
     void aktualisierePunktestand();
 protected:
     virtual void closeEvent ( QCloseEvent* closeargs );
+    virtual void resizeEvent ( QResizeEvent* resizeargs );
 public:
     QuizFenster ( PunkteAB& punkte );
     virtual ~QuizFenster();

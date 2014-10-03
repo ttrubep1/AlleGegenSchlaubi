@@ -17,8 +17,14 @@
  *
  */
 
+#include <QApplication>
+#include <QBrush>
+#include <QFile>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QPixmap>
+#include <QPalette>
+#include <QResizeEvent>
 
 #include "quizfenster.h"
 
@@ -165,6 +171,19 @@ void QuizFenster::beenden()
 {
     _ende = true;
     hide();
+}
+
+void QuizFenster::resizeEvent ( QResizeEvent* resizeargs )
+{
+    QWidget::resizeEvent ( resizeargs );
+    if ( QFile::exists ( QApplication::applicationDirPath() + QString::fromUtf8 ( "/hintergrund.png" ) ) )
+    {
+        QPixmap bild ( QApplication::applicationDirPath() + QString::fromUtf8 ( "/hintergrund.png" ) );
+        bild = bild.scaled ( size(), Qt::IgnoreAspectRatio );
+        QPalette fensterpalette = palette();
+        fensterpalette.setBrush ( QPalette::Background, bild );
+        setPalette ( fensterpalette );
+    }
 }
 
 #include "quizfenster.moc"
