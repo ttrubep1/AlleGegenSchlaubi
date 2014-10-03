@@ -27,10 +27,10 @@ class Frage final
 public:
     enum RichtigeAntwort : short unsigned int
     {
-        Arichtig = 0,
-        Brichtig = 1,
-        Crichtig = 2,
-        Drichtig = 3
+        Arichtig = 1,
+        Brichtig = 2,
+        Crichtig = 3,
+        Drichtig = 4
     };
 private:
     QString _titel;
