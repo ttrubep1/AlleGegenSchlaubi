@@ -37,6 +37,7 @@ private:
     static const int schriftGroesseGruppenBuchstabe = 22;
     static const int minBreite = 505;
     static const int minHoehe = 100;
+    static const Qt::GlobalColor farbeHintergrund = Qt::white;
     QLabel _text;
     QLabel _lblGruppeA;
     QLabel _lblGruppeB;

@@ -58,22 +58,25 @@ void QuizKnubbel::paintEvent ( QPaintEvent* paintargs )
 {
     QWidget::paintEvent ( paintargs );
     QPainter zeichner ( this );
+    zeichner.setRenderHint ( QPainter::Antialiasing, true );
+    zeichner.setRenderHint ( QPainter::HighQualityAntialiasing, true );
+    QBrush pinsel ( zeichner.brush() );
+    QPen stift ( zeichner.pen() );
+    pinsel.setStyle ( Qt::SolidPattern );
+    pinsel.setColor ( farbeHintergrund );
+    zeichner.setBrush ( pinsel );
     //zeichner.drawRect ( 0, 0, width()-1, height()-1 );
     QPoint rahmen[] = {_polypunkt1, _polypunkt2, _polypunkt3, _polypunkt4, _polypunkt5, _polypunkt6};
     zeichner.drawConvexPolygon ( rahmen, 6 );
     if ( _gruppeAaktiv )
     {
-        zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktOben );
-        zeichner.drawLine ( _gruppeAPunktMitte, _gruppeAPunktUnten );
-        zeichner.drawLine ( _gruppeAPunktOben, _polypunkt2 );
-        zeichner.drawLine ( _gruppeAPunktUnten, _polypunkt6 );
+        QPoint gruppeA[] = { _gruppeAPunktMitte, _gruppeAPunktOben, _polypunkt2, _polypunkt1, _polypunkt6, _gruppeAPunktUnten };
+        zeichner.drawPolygon ( gruppeA, 6 );
     }
     if ( _gruppeBaktiv )
     {
-        zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktOben );
-        zeichner.drawLine ( _gruppeBPunktMitte, _gruppeBPunktUnten );
-        zeichner.drawLine ( _gruppeBPunktOben, _polypunkt3 );
-        zeichner.drawLine ( _gruppeBPunktUnten, _polypunkt5 );
+        QPoint gruppeB[] = { _gruppeBPunktMitte, _gruppeBPunktOben, _polypunkt3, _polypunkt4, _polypunkt5, _gruppeBPunktUnten };
+        zeichner.drawPolygon ( gruppeB, 6 );
     }
 }
 
@@ -153,7 +156,7 @@ bool QuizKnubbel::gruppeAaktiv() const
 void QuizKnubbel::setGruppeAaktiv ( const bool aktiv )
 {
     _gruppeAaktiv = aktiv;
-    _lblGruppeA.setVisible(_gruppeAaktiv);
+    _lblGruppeA.setVisible ( _gruppeAaktiv );
     update();
 }
 
@@ -165,7 +168,7 @@ bool QuizKnubbel::gruppeBaktiv() const
 void QuizKnubbel::setGruppeBaktiv ( const bool aktiv )
 {
     _gruppeBaktiv = aktiv;
-    _lblGruppeB.setVisible(_gruppeBaktiv);
+    _lblGruppeB.setVisible ( _gruppeBaktiv );
     update();
 }
 
