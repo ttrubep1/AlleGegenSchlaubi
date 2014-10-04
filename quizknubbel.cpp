@@ -32,6 +32,7 @@ QuizKnubbel::QuizKnubbel ( QWidget* parentwidget )
       _lblGruppeB ( this )
 {
     _text.setText ( QString::fromUtf8 ( "###TEST###" ) );
+    _text.setWordWrap ( true );
     _lblGruppeA.setText ( QString::fromUtf8 ( "A" ) );
     _lblGruppeB.setText ( QString::fromUtf8 ( "B" ) );
     _lblGruppeA.setFont ( QFont ( QString::fromUtf8 ( "sans-serif" ), schriftGroesseGruppenBuchstabe ) );
@@ -91,7 +92,7 @@ void QuizKnubbel::resizeEvent ( QResizeEvent* resizeargs )
     _text.setGeometry (
         breiteGruppenBuchstabe + breiteSchraege,
         hoeheTextRand,
-        width() - breiteGruppenBuchstabe - breiteSchraege,
+        width() - 2*breiteGruppenBuchstabe - 2*breiteSchraege,
         height() - 2*hoeheTextRand
     );
     _lblGruppeA.setGeometry (
@@ -228,13 +229,13 @@ void QuizKnubbel::setRichtig ( const bool istrichtig )
     {
         blende->setStartValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
         blende->setEndValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
-	blende->setDuration ( dauerAnimationRichtig );
+        blende->setDuration ( dauerAnimationRichtig );
     }
     else
     {
         blende->setStartValue ( QVariant::fromValue<QColor> ( farbeRichtig ) );
         blende->setEndValue ( QVariant::fromValue<QColor> ( farbeNormal ) );
-	blende->setDuration ( dauerAnimation );
+        blende->setDuration ( dauerAnimation );
     }
     blende->start ( QAbstractAnimation::DeleteWhenStopped );
 }
