@@ -1,0 +1,45 @@
+=================================================
+  Kompilieren von AlleGegenSchlaubi unter Linux  
+=================================================
+
+Da AlleGegenSchlaubi unter Linux entwickelt wurde, ist das Kompilieren dort
+in der Regel problemlos und schnell.
+
+Systemanforderungen:
+
+- GNU C++ Compiler (g++) 4.8 oder höher
+- cmake 2.6 oder höher
+- Klassenbibliothek Qt4
+- KDE Software Compilation: Platform 4
+
+Für Qt und KDE müssen zudem die Header-Dateien installiert sein, damit das
+Programm gegen diese Bibliotheken kompiliert werden kann. Unter aktuellen
+Versionen von openSUSE (zum Zeitpunkt des Verfassens dieser Datei ist Version
+13.1 aktuell) heißen diese Pakete "libqt4-devel" und "libkde4-devel", unter
+anderen Distributionen dürfte der Name ähnlich sein.
+
+Zum Kompilieren benötigt man zunächst den Quellcode von AlleGegenSchlaubi.
+Liegt dieser noch nicht vor, so kann man ihn als ZIP-Datei herunterladen:
+https://github.com/ttrubep1/AlleGegenSchlaubi/archive/master.zip
+
+Falls Git installiert ist, kann man auch einen lokalen Klon des gesamten
+Repositories erzeugen:
+git clone https://github.com/ttrubep1/AlleGegenSchlaubi.git
+
+Zum eigentlichen Kompilieren öffnet man ein Terminal, wechselt in das Verzeich-
+nis mit dem Quellcode und gibt folgende Befehle ein:
+
+- mkdir build (oder ein anderer Name für das Bau-Verzeichnis)
+- cd build (ggf. auch anpassen)
+- cmake ..
+- make
+
+Wenn die Ausgabe mit "[100%] Built target AlleGegenSchlaubi" endet, hat alles
+funktioniert und die ausführbare Datei "AlleGegenSchlaubi" kann an einen
+beliebigen Ort kopiert werden. Die Programmbibliotheken von Qt und KDE müssen
+unter Linux nicht beigelegt werden, der Bibliothekenlader von Linux findet sie
+automatisch.
+
+Zu Beachten ist jedoch, dass AlleGegenSchlaubi den Hintergrund für das Quiz-
+Fenster in einer Datei namens "hintergrund.png" im selben Verzeichnis wie die
+ausführbare Datei sucht, dieses Bild muss daher beigelegt werden.
