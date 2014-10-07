@@ -1,0 +1,20 @@
+====================================================
+  Kompilieren von AlleGegenSchlaubi unter Mac OS X  
+====================================================
+
+Da Qt4 auch Mac OS X unterstützt, sollte AlleGegenSchlaubi auch auf diesem
+Betriebssystem ohne Probleme kompiliert und benutzt werden können.
+
+Mangels eines Apple-Computers kann dies durch den Autor jedoch nicht getestet
+werden, so dass an dieser Stelle keine genauen Hinweise gegeben werden können.
+
+Auf jeden Fall muss darauf geachtet werden, dass der LLVM/Clang-Compiler in
+einer Version genutzt wird, die C++11 mindestens ebenso gut unterstützt wie
+der GNU C++ Compiler in der Version 4.8, wenn als Entwicklungsumgebung Apples
+Xcode verwendet wird. Zudem müssen die Compiler-Flags in der CMakeLists.txt
+ggf. angepasst werden.
+
+Weitere Hinweise zum Erstellen einer Qt-Anwendung unter Mac OS X finden sich
+auf der Webseite des Qt-Projektes:
+http://qt-project.org/doc/qt-4.8/deployment-mac.html
+
