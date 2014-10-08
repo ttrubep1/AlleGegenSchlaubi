@@ -1,0 +1,66 @@
+===================================================
+  Kompilieren von AlleGegenSchlaubi unter Windows  
+===================================================
+
+Das Kompilieren und Nutzen von AlleGegenSchlaubi wurde unter Microsoft
+Windows in den Versionen XP, 7 und 8.1 erfolgreich getestet.
+
+Allerdings müssen dazu die benötigten Programmbibliotheken erst von Hand
+nachinstalliert werden. Der C++-Compiler von Microsoft (in Visual Studio
+enthalten) kann zum Zeitpunkt der Verfassung dieser Datei nicht benutzt werden,
+da er C++11 noch nicht im notwendigen Ausmaß unterstützt.
+
+Als Alternative wurde beim Test des Autors daher die Windows-Version der GNU
+Compiler Collection benutzt. Die heißt MinGW (Minimalist GNU for Windows) und
+kann unter "http://www.mingw.org/" heruntergeladen werden. Im "Paketmanager"
+von MinGW muss dann der C++-Compiler g++ installiert werden.
+
+Die aktuelle Version von Qt4 kann unter "http://www.qt-project.org/" herunter-
+geladen werden. Da bei C++ die Binärschnittstelle von der verwendeten Compiler-
+Infrastruktur abhängig ist, muss die zum verwendeten Compiler passende Qt4-
+Version heruntergeladen werden, in diesem Fall die für MinGW.
+
+Als letzte Komponente wird das Build-System CMake benötigt, dass unter
+"http://www.cmake.org" heruntergeladen werden kann. Nachdem alle Programme in-
+stalliert worden sind, kann man im Startmenü den "Qt Command Prompt" öffnen.
+
+Hier werden die benötigten Umgebungsvariablen gesetzt, nur der Pfad zu CMake
+muss in die Umgebungsvariable PATH aufgenommen werden. Alternativ kann beim
+Aufruf von CMake auch der komplette Pfad benutzt werden.
+
+Man navigiert nun in dem Terminal-Fenster in das Verzeichnis, in dem der Quell-
+code von AlleGegenSchlaubi liegt. Hier gibt man folgende Befehle ein:
+
+- mkdir build (oder ein anderer Name für das Bau-Verzeichnis)
+- cd build (ggf. auch anpassen)
+- cmake -G "MinGW Makefiles" ..
+- mingw32-make
+
+Wenn die Ausgabe mit "[100%] Built target AlleGegenSchlaubi" endet, hat alles
+funktioniert und die ausführbare Datei "AlleGegenSchlaubi.exe" kann an einen
+beliebigen Ort kopiert werden. Damit das Programm gestartet werden kann,
+benötigt es jedoch die Programmbibliotheken von Qt4 und die Laufzeitumgebung von
+MinGW. Daher müssen folgende DLL-Dateien aus dem bin-Unterverzeichnis von
+MinGW und Qt in das Programmverzeichnis zu AlleGegenSchlaubi.exe kopiert werden:
+
+Aus dem MinGW-Projekt:
+
+- mingwm10.dll
+- libstdc++-6.dll
+- libgcc_s_dw2-1.dll
+
+Aus dem Qt-Projekt:
+
+- QtCore4.dll
+- QtGui4.dll
+- libwinpthread-1.dll
+
+Wird AlleGegenSchlaubi in Binärform weitergegeben, so sind die entsprechenden
+Lizenzbestimmungen von MinGW und Qt zu beachten. Insbesondere muss den Empfän-
+gern von AlleGegenSchlaubi neben dem Quelltext von AlleGegenSchlaubi.exe (da
+AlleGegenSchlaubi unter der GPLv3 steht) auch der Quelltext der mitgelieferten
+Programmbibliotheken zugänglich gemacht werden.
+
+Zu Beachten ist zudem, dass AlleGegenSchlaubi den Hintergrund für das Quiz-
+Fenster in einer Datei namens "hintergrund.png" im selben Verzeichnis wie die
+ausführbare Datei sucht, dieses Bild muss daher beigelegt werden.
