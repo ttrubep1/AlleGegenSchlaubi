@@ -1,3 +1,13 @@
+/**
+ * @file frage.cpp
+ *
+ * @author Tobias Triffterer
+ *
+ * @brief Container-Klasse für Fragen
+ *
+ * @version 1.0.0
+ *
+ **/
 /*
  * AlleGegenSchlaubi - educational quiz game
  * Copyright (C) 2014  Tobias Triffterer <tobias@ep1.ruhr-uni-bochum.de>

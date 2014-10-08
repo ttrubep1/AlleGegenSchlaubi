@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ *
+ * @author Tobias Triffterer
+ *
+ * @brief Einsprungpunkt der ausführbaren Datei
+ *
+ * @version 1.0.0
+ *
+ **/
 /*
  * AlleGegenSchlaubi - educational quiz game
  * Copyright (C) 2014  Tobias Triffterer <tobias@ep1.ruhr-uni-bochum.de>

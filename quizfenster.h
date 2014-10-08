@@ -1,3 +1,13 @@
+/**
+ * @file quizfenster.h
+ *
+ * @author Tobias Triffterer
+ *
+ * @brief Fenster zur Anzeige der Fragen für Publikum und Kandidaten
+ *
+ * @version 1.0.0
+ *
+ **/
 /*
  * AlleGegenSchlaubi - educational quiz game
  * Copyright (C) 2014  Tobias Triffterer <tobias@ep1.ruhr-uni-bochum.de>

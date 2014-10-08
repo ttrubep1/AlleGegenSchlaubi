@@ -1,3 +1,13 @@
+/**
+ * @file quizknubbel.cpp
+ *
+ * @author Tobias Triffterer
+ *
+ * @brief Widget zur Anzeige von Fragen und Antworten im QuizFenster
+ *
+ * @version 1.0.0
+ *
+ **/
 /*
  * AlleGegenSchlaubi - educational quiz game
  * Copyright (C) 2014  Tobias Triffterer <tobias@ep1.ruhr-uni-bochum.de>
